@@ -73,12 +73,28 @@ public class EnemyTest : MonoBehaviour
     {
         Vector2 direction2D = _inputSystem_Actions.Player.Move.ReadValue<Vector2>();
         direction2D.Normalize();
+
+
         transform.Translate(direction2D * Time.deltaTime * _playerSpeed);
+
+
+        if (direction2D != Vector2.zero)
+        {
+            float angle = Mathf.Atan2(direction2D.y, direction2D.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        }
+
 
         float clampedX = Mathf.Clamp(transform.position.x, _minX, _maxX);
         float clampedY = Mathf.Clamp(transform.position.y, _minY, _maxY);
 
         transform.position = new Vector2(clampedX, clampedY);
     }
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            Destroy(collision.gameObject);
+        }
+    }
 }
