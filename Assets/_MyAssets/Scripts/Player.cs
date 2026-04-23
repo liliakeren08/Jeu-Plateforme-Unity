@@ -4,6 +4,9 @@ using System;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _playerSpeed = 1f;
+    [SerializeField] private float _PlayerXpCap = 10f;
+    [SerializeField] private float _PlayerCurentXp = 0f;
+    [SerializeField] private float _PlayerCurentLvl = 1f;
     public float PlayerSpeed => _playerSpeed;
     private SpriteRenderer _spriteRenderer;
     private InputSystem_Actions _inputSystem_Actions;
