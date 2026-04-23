@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _PlayerXpCap = 10f;
     [SerializeField] private float _PlayerCurentXp = 0f;
     [SerializeField] private float _PlayerCurentLvl = 1f;
+    public float PlayerCurentXp => _PlayerCurentXp;
     public float PlayerSpeed => _playerSpeed;
     private SpriteRenderer _spriteRenderer;
     private InputSystem_Actions _inputSystem_Actions;
@@ -33,6 +34,21 @@ public class Player : MonoBehaviour
     private void Update()
     {
         PlayerMovement();
+        PlayerLvlUp();
+    }
+
+    private void PlayerLvlUp()
+    {
+        if (_PlayerCurentXp >= _PlayerXpCap)
+        {
+            _PlayerCurentLvl++;
+        }
+    }
+
+    public void AddXP(float amount)
+    {
+        _PlayerCurentXp += amount;
+        Debug.Log("xp: " + _PlayerCurentXp);
     }
 
     private void OnDestroy()
@@ -51,6 +67,9 @@ public class Player : MonoBehaviour
 
         transform.position = new Vector2(clampedX, clampedY);
 
-
     }
+
+    
+
+
 }
