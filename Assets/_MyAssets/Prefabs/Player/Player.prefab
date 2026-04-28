@@ -141,7 +141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f5b889d3f897b943b7cc21d94fc5f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPickUp
-  _player: {fileID: 4200246086518151422}
+  _collider: {fileID: 7863348880570768647}
+  _boostMultiplier: 10
+  _duration: 2
+  _player: {fileID: 5140403154008166547}
 --- !u!1 &2084215906592870411
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,10 +155,9 @@ GameObject:
   m_Component:
   - component: {fileID: 343331242494158325}
   - component: {fileID: 6180751803301022783}
-  - component: {fileID: 4200246086518151422}
   - component: {fileID: 3642177550797525621}
-  - component: {fileID: 2071100855810168896}
   - component: {fileID: 6153754859799021307}
+  - component: {fileID: 5140403154008166547}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -239,23 +241,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &4200246086518151422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2084215906592870411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9109c75ea53e71a4fbf67b6a3a7dc442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  _playerSpeed: 1
-  _PlayerXpCap: 10
-  _PlayerCurentXp: 0
-  _PlayerCurentLvl: 1
-  _maxHeight: 5
 --- !u!61 &3642177550797525621
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -302,23 +287,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2071100855810168896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2084215906592870411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9109c75ea53e71a4fbf67b6a3a7dc442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  _playerSpeed: 8
-  _PlayerXpCap: 10
-  _PlayerCurentXp: 0
-  _PlayerCurentLvl: 1
-  _maxHeight: 5
 --- !u!50 &6153754859799021307
 Rigidbody2D:
   serializedVersion: 5
@@ -346,6 +314,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5140403154008166547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084215906592870411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9109c75ea53e71a4fbf67b6a3a7dc442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  _playerSpeed: 5
+  _PlayerXpCap: 5
+  _PlayerCurentXp: 0
+  _PlayerCurentLvl: 1
+  _playerLife: 5
+  _maxHeight: 5
 --- !u!1 &7575231714968148459
 GameObject:
   m_ObjectHideFlags: 0

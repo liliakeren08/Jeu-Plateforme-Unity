@@ -3,7 +3,7 @@ using System;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _playerSpeed = 1f;
+    [SerializeField] private float _playerSpeed = 5f;
     [SerializeField] private float _PlayerXpCap = 10f;
     [SerializeField] private float _PlayerCurentXp = 0f;
     [SerializeField] private float _PlayerCurentLvl = 1f;
@@ -69,8 +69,9 @@ public class Player : MonoBehaviour
     private void PlayerMovement()
     {
         Vector2 direction2D = _inputSystem_Actions.Player.Move.ReadValue<Vector2>();
-        direction2D.Normalize();
-        transform.Translate(direction2D * Time.deltaTime * _playerSpeed);
+
+        Vector3 movement = new Vector3(direction2D.x, direction2D.y, 0f);
+        transform.position += movement * _playerSpeed * Time.deltaTime;
 
         float clampedX = Mathf.Clamp(transform.position.x, _minX, _maxX);
         float clampedY = Mathf.Clamp(transform.position.y, _minY, _maxY);
@@ -84,6 +85,7 @@ public class Player : MonoBehaviour
         _PlayerCurentLvl++;
 
         _PlayerXpCap += 15f;
+        _PlayerCurentXp = 0f;
         OnPlayerUp?.Invoke(this, new OnPlayerUpEventArgs
         {
             newLevel = _PlayerCurentLvl
