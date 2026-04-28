@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _PlayerXpCap = 10f;
     [SerializeField] private float _PlayerCurentXp = 0f;
     [SerializeField] private float _PlayerCurentLvl = 1f;
+    public event EventHandler<OnPlayerUpEventArgs> OnPlayerUp;
     public float PlayerCurentXp => _PlayerCurentXp;
     public float PlayerSpeed => _playerSpeed;
     private SpriteRenderer _spriteRenderer;
@@ -30,6 +31,10 @@ public class Player : MonoBehaviour
         _minY = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y + halfPlayerHeight;
         _maxY = _maxHeight - halfPlayerHeight;
     }
+    public class OnPlayerUpEventArgs : EventArgs
+    {
+        public float newLevel;
+    }
 
     private void Update()
     {
@@ -41,7 +46,11 @@ public class Player : MonoBehaviour
     {
         if (_PlayerCurentXp >= _PlayerXpCap)
         {
-            _PlayerCurentLvl++;
+
+            LevelUp();
+            
+            Debug.Log("Lv: " + _PlayerCurentLvl);
+
         }
     }
 
@@ -69,7 +78,18 @@ public class Player : MonoBehaviour
 
     }
 
-    
+    private void LevelUp()
+    {
+        _PlayerCurentLvl++;
+
+        _PlayerXpCap += 15f;
+        OnPlayerUp?.Invoke(this, new OnPlayerUpEventArgs
+        {
+            newLevel = _PlayerCurentLvl
+        }) ;
+    }
+
+
 
 
 }
