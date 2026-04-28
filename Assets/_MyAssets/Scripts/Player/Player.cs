@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _PlayerXpCap = 10f;
     [SerializeField] private float _PlayerCurentXp = 0f;
     [SerializeField] private float _PlayerCurentLvl = 1f;
+    [SerializeField] private float _playerLife = 5f;
     public event EventHandler<OnPlayerUpEventArgs> OnPlayerUp;
     public float PlayerCurentXp => _PlayerCurentXp;
     public float PlayerSpeed => _playerSpeed;

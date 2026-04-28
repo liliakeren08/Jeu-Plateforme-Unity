@@ -9,5 +9,9 @@ public class MagnetZone : MonoBehaviour
         {
             other.GetComponent<XPOrb>().StartAttract(transform.parent);
         }
+        if (other.CompareTag("Power"))
+        {
+            other.GetComponent<PowerRange>().StartAttract(transform.parent);
+        }
     }
 }
