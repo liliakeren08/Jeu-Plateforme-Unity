@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _PlayerCurentXp = 0f;
     [SerializeField] private float _PlayerCurentLvl = 1f;
     [SerializeField] private float _playerLife = 5f;
+    [SerializeField] private WeaponManager _weaponManager;
+    [SerializeField] private Weapons _startingWeapon;
     public event EventHandler<OnPlayerUpEventArgs> OnPlayerUp;
     public float PlayerCurentXp => _PlayerCurentXp;
     public float PlayerSpeed => _playerSpeed;
@@ -20,6 +22,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        _weaponManager.AddWeapon(_startingWeapon);
         Camera mainCamera = Camera.main;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         float halfPlayerWithd = _spriteRenderer.bounds.extents.x;
