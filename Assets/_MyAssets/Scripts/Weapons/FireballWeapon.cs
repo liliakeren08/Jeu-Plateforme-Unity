@@ -5,6 +5,7 @@ public class FireballWeapon : Weapons
     [SerializeField] private GameObject _fireballPrefab;
     [SerializeField] private float _cooldown = 1f;
     [SerializeField] private float _speed = 6f;
+    [SerializeField] private float _weaponLvl = 1f;
 
     private float _timer;
 
