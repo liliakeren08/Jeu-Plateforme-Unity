@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _playerLife = 5f;
     [SerializeField] private WeaponManager _weaponManager;
     [SerializeField] private Weapons _startingWeapon;
+    private Vector2 _lastDirection = Vector2.right;
     public event EventHandler<OnPlayerUpEventArgs> OnPlayerUp;
     public float PlayerCurentXp => _PlayerCurentXp;
     public float PlayerSpeed => _playerSpeed;
@@ -73,6 +74,9 @@ public class Player : MonoBehaviour
     {
         Vector2 direction2D = _inputSystem_Actions.Player.Move.ReadValue<Vector2>();
 
+        if (direction2D.x != 0)
+            _lastDirection = new Vector2(direction2D.x, 0).normalized;
+
         Vector3 movement = new Vector3(direction2D.x, direction2D.y, 0f);
         transform.position += movement * _playerSpeed * Time.deltaTime;
 
@@ -93,6 +97,11 @@ public class Player : MonoBehaviour
         {
             newLevel = _PlayerCurentLvl
         }) ;
+    }
+
+    public Vector2 GetLastDirection()
+    {
+        return _lastDirection;
     }
 
 
