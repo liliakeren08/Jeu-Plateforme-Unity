@@ -1,0 +1,16 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# https://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:c2b4cacb248dc0342d5617d0e6c78f9e:44962723e0602f0e33df0ccf367d27bd:53d7f59c1a419b0c25bc9d49da9d18a4$
+#
+:format=40300
+:texture=PlayerSheet.png
+:size=1024x1024
+:pivotpoints=enabled
+:borders=disabled
+:alphahandling=ClearTransparentPixels
+
+spritesheet_exorcist;0;384;640;640; 0.5;0.5; 0;0;0;0
