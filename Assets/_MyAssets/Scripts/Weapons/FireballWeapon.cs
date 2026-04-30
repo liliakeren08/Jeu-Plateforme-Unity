@@ -78,12 +78,12 @@ public class FireballWeapon : Weapons
         switch (level)
         {
             case 2:
-                _cooldown -= 0.2f; // tire plus vite
+                _cooldown -= 0.2f; 
                 Debug.Log("Bonus lvl 2: cooldown réduit");
                 break;
 
             case 3:
-                _speed += 2f; // projectile plus rapide
+                _speed += 2f; 
                 Debug.Log("Bonus lvl 3: vitesse augmentée");
                 break;
 
