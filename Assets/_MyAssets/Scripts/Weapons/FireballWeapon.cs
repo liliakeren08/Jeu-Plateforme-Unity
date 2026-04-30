@@ -7,7 +7,36 @@ public class FireballWeapon : Weapons
     [SerializeField] private float _speed = 6f;
     [SerializeField] private float _weaponLvl = 1f;
 
+    private Player player; 
+
     private float _timer;
+
+   
+    public override void Init(Player player)
+    {
+        this.player = player;
+
+        
+        player.OnPlayerUp += Player_OnPlayerUp;
+    }
+
+    
+
+    private void OnDisable()
+    {
+       
+        if (player != null)
+        {
+            player.OnPlayerUp -= Player_OnPlayerUp;
+        }
+    }
+
+    private void Player_OnPlayerUp(object sender, Player.OnPlayerUpEventArgs e)
+    {
+        _weaponLvl++;
+
+        Debug.Log("Weapon level up ! Niveau actuel : " + _weaponLvl);
+    }
 
     private void Update()
     {
@@ -22,10 +51,24 @@ public class FireballWeapon : Weapons
 
     public override void Attack()
     {
-        GameObject fbObj = Instantiate(_fireballPrefab, _player.transform.position, Quaternion.identity);
+        
+        if (player == null)
+        {
+            Debug.LogWarning("Player non assigné dans FireballWeapon !");
+            return;
+        }
+
+        GameObject fbObj = Instantiate(
+            _fireballPrefab,
+            player.transform.position,
+            Quaternion.identity
+        );
 
         Fireball fb = fbObj.GetComponent<Fireball>();
 
-        fb.Init(_speed, _player.GetLastDirection());
+        if (fb != null)
+        {
+            fb.Init(_speed, player.GetLastDirection());
+        }
     }
 }
