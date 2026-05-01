@@ -1,11 +1,8 @@
 version: 2
 tpsheetFileNames:
-- Assets/_MyAssets/DESIGN_ESDRAS/1_Sprites/PlayerSheet.tpsheet
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
 textureFileNames:
-- Assets/_MyAssets/DESIGN_ESDRAS/1_Sprites/PlayerSheet.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
-- 
 - Assets/codeandweb.com/Example/SpriteSheet/sprites_n.png
 enableDebugOutput: 0
