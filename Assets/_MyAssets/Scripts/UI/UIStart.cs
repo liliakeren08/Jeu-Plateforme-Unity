@@ -7,73 +7,82 @@ using UnityEngine.SceneManagement;
 
 public class UIStart : MonoBehaviour
 {
+    [Header("Buttons")]
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _returnButton;
+    [SerializeField] private Button _buttonClose; // AJOUTÉ : Pour fermer les instructions
 
+    [Header("Panels")]
+    [SerializeField] private GameObject _instructionsPanel;
     [SerializeField] private GameObject _scorePanel;
     [SerializeField] private GameObject _startPanel;
+    [SerializeField] private GameObject _gameButtons; // AJOUTÉ : Ton objet MenuBouttons
 
+    [Header("Text")]
     [SerializeField] private TextMeshProUGUI _txtCompteur = default;
 
     private void Start()
     {
-        //Cursor.lockState = CursorLockMode.Locked; // Verrouille le curseur au centre de l'écran
-        //Cursor.visible = false; // Rend le curseur invisible
-
-        //PlayerPerfs pour le compteur de partie
+        // PlayerPrefs pour le compteur de partie
         int compteur = PlayerPrefs.GetInt("GamesCount", 0);
         _txtCompteur.text = "Nombre de parties : " + compteur.ToString();
 
         // Sélectionne le bouton démarrer au chargement de la scène
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(_startButton.gameObject);
+        if (_startButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(_startButton.gameObject);
+        }
     }
 
-    // Appelé lorsque le bouton "Afficher les scores" est cliqué pour afficher le panel des scores
     public void OnShowHighscoresClick()
     {
         _scorePanel.SetActive(true);
         _startPanel.SetActive(false);
 
-        // Sélectionne le bouton retour au changement de panel
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(_returnButton.gameObject);
 
         StartCoroutine(ReturnToStartPanelDelay());
     }
 
-    // Coroutine pour revenir automatiquement au panel de démarrage après un délai
     private IEnumerator ReturnToStartPanelDelay()
     {
         yield return new WaitForSeconds(30f);
-        OnReturnClick();
+        if (_scorePanel.activeSelf) OnReturnClick();
     }
 
-    // Appelé lorsque le bouton retour est cliqué pour revenir au panel de démarrage
+    public void OnInstructionsClick()
+    {
+        _instructionsPanel.SetActive(true);
+        _gameButtons.SetActive(false); // Désactive le menu principal
+
+        // Focus sur le bouton fermer
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(_buttonClose.gameObject);
+    }
+
     public void OnReturnClick()
     {
         _scorePanel.SetActive(false);
+        _instructionsPanel.SetActive(false); // Assure la fermeture des deux
         _startPanel.SetActive(true);
+        _gameButtons.SetActive(true);
 
-        // Sélectionne le bouton démarrer au changement de panel
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(_startButton.gameObject);
     }
 
-    // Appelé lorsque le bouton "Démarrer" est cliqué pour lancer la partie
     public void OnStartClick()
     {
-        // Incrémente le compteur de parties dans les PlayerPrefs à chaque démarrage de partie
         int compteur = PlayerPrefs.GetInt("GamesCount", 0);
         compteur++;
         PlayerPrefs.SetInt("GamesCount", compteur);
 
-        // Charge la scène de jeu
         int noScene = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(noScene + 1);
     }
 
-    // Appelé lorsque le bouton "Quitter" est cliqué pour quitter le jeu
     public void OnQuitClick()
     {
 #if UNITY_EDITOR
