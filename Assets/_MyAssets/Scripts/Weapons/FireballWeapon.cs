@@ -55,7 +55,7 @@ public class FireballWeapon : Weapons
         
         if (player == null)
         {
-            Debug.LogWarning("Player non assigné dans FireballWeapon !");
+            Debug.LogWarning("Player non assignï¿½ dans FireballWeapon !");
             return;
         }
 
@@ -78,13 +78,13 @@ public class FireballWeapon : Weapons
         switch (level)
         {
             case 2:
-                _cooldown -= 0.2f; 
-                Debug.Log("Bonus lvl 2: cooldown réduit");
+                _cooldown -= 0.5f; 
+                Debug.Log("Bonus lvl 2: cooldown rï¿½duit");
                 break;
 
             case 3:
                 _speed += 2f; 
-                Debug.Log("Bonus lvl 3: vitesse augmentée");
+                Debug.Log("Bonus lvl 3: vitesse augmentï¿½e");
                 break;
 
             case 4:
@@ -95,11 +95,11 @@ public class FireballWeapon : Weapons
 
             case 5:
                 // exemple futur : multi shot
-                Debug.Log("Bonus lvl 5: à définir");
+                Debug.Log("Bonus lvl 5: ï¿½ dï¿½finir");
                 break;
 
             default:
-                Debug.Log("Pas de bonus défini pour ce niveau");
+                Debug.Log("Pas de bonus dï¿½fini pour ce niveau");
                 break;
         }
     }
