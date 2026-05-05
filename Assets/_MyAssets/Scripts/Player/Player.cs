@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
     {
         _PlayerCurentLvl++;
 
-        _PlayerXpCap += 15f;
+        _PlayerXpCap += 0f;
         _PlayerCurentXp = 0f;
         OnPlayerUp?.Invoke(this, new OnPlayerUpEventArgs
         {
