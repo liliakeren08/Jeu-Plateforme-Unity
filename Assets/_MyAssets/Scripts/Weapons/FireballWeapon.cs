@@ -1,9 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FireballWeapon : Weapons
 {
     [SerializeField] private GameObject _fireballPrefab;
-    [SerializeField] private float _cooldown = 1f;
+    [SerializeField] private float _cooldown = 0.7f;
     [SerializeField] private float _speed = 6f;
     [SerializeField] private float _weaponLvl = 1f;
     private float _sizeMultiplier = 1f;
@@ -57,7 +58,7 @@ public class FireballWeapon : Weapons
     {
         if (player == null)
         {
-            Debug.LogWarning("Player non assigné dans FireballWeapon !");
+            Debug.LogWarning("Player non assigné ");
             return;
         }
 
@@ -96,32 +97,37 @@ public class FireballWeapon : Weapons
         {
             case 2:
                 _cooldown -= 0.5f; 
-                Debug.Log("Bonus lvl 2: cooldown r�duit");
                 break;
 
             case 3:
-                _speed += 5f; 
-                Debug.Log("Bonus lvl 3: vitesse augment�e");
+                _speed += 5f;
+                _cooldown -= 0.1f;
+                _projectileCount = 2;
                 break;
 
             case 4:
                 _cooldown -= 0.3f;
                 _speed += 2f;
-                Debug.Log("Bonus lvl 4: mix cooldown + speed");
                 break;
 
             case 5:
                 _projectileCount = 3; 
-                Debug.Log("Bonus lvl 5: multishot activé");
                 break;
             case 6:
                 _sizeMultiplier += 0.5f;
-                Debug.Log("Bonus lvl 6: taille augmentée");
+                break;
+            case 7:
+                _sizeMultiplier += 0.2f;
+                _cooldown -= 0.3f;
+                _speed += 2f;
+                break;
+            case 8:
+                _projectileCount = 5;
+                _spreadAngle = 10f;
                 break;
 
 
             default:
-                Debug.Log("Pas de bonus d�fini pour ce niveau");
                 break;
         }
     }

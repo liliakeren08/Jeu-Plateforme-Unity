@@ -62,7 +62,6 @@ public class Player : MonoBehaviour
     public void AddXP(float amount)
     {
         _PlayerCurentXp += amount;
-        Debug.Log("xp: " + _PlayerCurentXp);
     }
 
     private void OnDestroy()
