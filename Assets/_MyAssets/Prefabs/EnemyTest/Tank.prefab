@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4251944589158716324}
   m_Layer: 0
   m_Name: Tank
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +124,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -160,6 +160,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _enemySpeed: 3
+  _enemyAttackPrefab: {fileID: 0}
+  _explosionAnim: {fileID: 0}
+  _PointsMinToStartAttack: 500
+  _knockbackForce: 5
+  _knockbackDuration: 0.2
 --- !u!50 &4251944589158716324
 Rigidbody2D:
   serializedVersion: 5

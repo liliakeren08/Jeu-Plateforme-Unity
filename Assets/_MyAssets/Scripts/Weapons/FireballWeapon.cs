@@ -1,11 +1,15 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FireballWeapon : Weapons
 {
     [SerializeField] private GameObject _fireballPrefab;
-    [SerializeField] private float _cooldown = 1f;
+    [SerializeField] private float _cooldown = 0.7f;
     [SerializeField] private float _speed = 6f;
     [SerializeField] private float _weaponLvl = 1f;
+    private float _sizeMultiplier = 1f;
+    private int _projectileCount = 1;
+    private float _spreadAngle = 15f;
 
     private Player player; 
 
@@ -52,24 +56,38 @@ public class FireballWeapon : Weapons
 
     public override void Attack()
     {
-        
         if (player == null)
         {
-            Debug.LogWarning("Player non assigné dans FireballWeapon !");
+            Debug.LogWarning("Player non assignÃ© ");
             return;
         }
 
-        GameObject fbObj = Instantiate(
-            _fireballPrefab,
-            player.transform.position,
-            Quaternion.identity
-        );
+        Vector2 baseDir = player.GetLastDirection().normalized;
 
-        Fireball fb = fbObj.GetComponent<Fireball>();
-
-        if (fb != null)
+        for (int i = 0; i < _projectileCount; i++)
         {
-            fb.Init(_speed, player.GetLastDirection());
+            float angleOffset = 0f;
+
+            if (_projectileCount > 1)
+            {
+                float totalSpread = _spreadAngle * (_projectileCount - 1);
+                angleOffset = -totalSpread / 2f + (_spreadAngle * i);
+            }
+
+            Vector2 newDir = Quaternion.Euler(0, 0, angleOffset) * baseDir;
+
+            GameObject fbObj = Instantiate(
+                _fireballPrefab,
+                player.transform.position,
+                Quaternion.identity
+            );
+
+            Fireball fb = fbObj.GetComponent<Fireball>();
+
+            if (fb != null)
+            {
+                fb.Init(_speed, newDir, _sizeMultiplier);
+            }
         }
     }
 
@@ -78,28 +96,38 @@ public class FireballWeapon : Weapons
         switch (level)
         {
             case 2:
-                _cooldown -= 0.2f; 
-                Debug.Log("Bonus lvl 2: cooldown réduit");
+                _cooldown -= 0.5f; 
                 break;
 
             case 3:
-                _speed += 2f; 
-                Debug.Log("Bonus lvl 3: vitesse augmentée");
+                _speed += 5f;
+                _cooldown -= 0.1f;
+                _projectileCount = 2;
                 break;
 
             case 4:
-                _cooldown -= 0.2f;
-                _speed += 1f;
-                Debug.Log("Bonus lvl 4: mix cooldown + speed");
+                _cooldown -= 0.3f;
+                _speed += 2f;
                 break;
 
             case 5:
-                // exemple futur : multi shot
-                Debug.Log("Bonus lvl 5: à définir");
+                _projectileCount = 3; 
+                break;
+            case 6:
+                _sizeMultiplier += 0.5f;
+                break;
+            case 7:
+                _sizeMultiplier += 0.2f;
+                _cooldown -= 0.3f;
+                _speed += 2f;
+                break;
+            case 8:
+                _projectileCount = 5;
+                _spreadAngle = 10f;
                 break;
 
+
             default:
-                Debug.Log("Pas de bonus défini pour ce niveau");
                 break;
         }
     }
