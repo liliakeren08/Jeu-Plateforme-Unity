@@ -4,14 +4,15 @@ using System;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _playerSpeed = 5f;
-    [SerializeField] private float _PlayerXpCap = 10f;
+    [SerializeField] private float _PlayerXpCap = 6f;
     [SerializeField] private float _PlayerCurentXp = 0f;
     [SerializeField] private float _PlayerCurentLvl = 1f;
-    [SerializeField] private float _playerLife = 5f;
+    [SerializeField] private float _playerLife = 20f;
     [SerializeField] private WeaponManager _weaponManager;
     [SerializeField] private Weapons _startingWeapon;
     private Vector2 _lastDirection = Vector2.right;
     public event EventHandler<OnPlayerUpEventArgs> OnPlayerUp;
+    public event EventHandler OnPlayerDeath;
     public float PlayerCurentXp => _PlayerCurentXp;
     public float PlayerSpeed => _playerSpeed;
     private SpriteRenderer _spriteRenderer;
@@ -62,7 +63,6 @@ public class Player : MonoBehaviour
     public void AddXP(float amount)
     {
         _PlayerCurentXp += amount;
-        Debug.Log("xp: " + _PlayerCurentXp);
     }
 
     private void OnDestroy()
@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
     {
         _PlayerCurentLvl++;
 
-        _PlayerXpCap += 15f;
+        _PlayerXpCap += 10f;
         _PlayerCurentXp = 0f;
         OnPlayerUp?.Invoke(this, new OnPlayerUpEventArgs
         {
@@ -102,6 +102,27 @@ public class Player : MonoBehaviour
     public Vector2 GetLastDirection()
     {
         return _lastDirection;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _playerLife -= damage;
+
+        if (_playerLife <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player is dead");
+
+        OnPlayerDeath?.Invoke(this, EventArgs.Empty);
+        _inputSystem_Actions.Player.Disable();
+
+        // option simple pour l'instant
+        gameObject.SetActive(false);
     }
 
 
