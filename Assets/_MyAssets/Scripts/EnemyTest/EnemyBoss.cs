@@ -1,13 +1,12 @@
 using System;
 using UnityEngine;
 
-public class EnemyBoss : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-    [SerializeField] private int _enemyPoints = 10; 
+    [SerializeField] private int _enemyPoints = 30; 
     [SerializeField] private GameObject _enemyAttackPrefab; 
     //[SerializeField] private GameObject _explosionAnim; 
     [SerializeField] private GameObject _xpOrbPrefab; 
-    [SerializeField] private GameObject _powerOrbPrefab; 
     
     [Header("Mouvement")]
     [SerializeField] private float _enemySpeed = 3f; 
@@ -15,7 +14,7 @@ public class EnemyBoss : MonoBehaviour
     [SerializeField] private float _knockbackDuration = 0.2f; 
 
     [Header("Attaque")]
-    [SerializeField] private bool _canAttack = false; 
+    [SerializeField] private bool _canAttack = true; 
     [SerializeField] private int _pointsMinToStartAttack = 500; 
     [SerializeField] private float _fireRateMin = 2f; 
     [SerializeField] private float _fireRateMax = 4f; 
@@ -24,8 +23,8 @@ public class EnemyBoss : MonoBehaviour
     [SerializeField] private float _maxHealth = 1f; 
     [SerializeField] private float _damageOnContact = 1f; 
 
-    [Header("Orbite (Boss seulement)")]
-    [SerializeField] private bool _orbitsPlayer = false; 
+    [Header("Orbite")]
+    [SerializeField] private bool _orbitsPlayer = true; 
     [SerializeField] private float _orbitRadius = 3f; 
     [SerializeField] private float _orbitSpeed = 90f; 
     [SerializeField] private float _orbitCloseSpeed = 0.3f; 
@@ -120,9 +119,6 @@ public class EnemyBoss : MonoBehaviour
 
         if (_xpOrbPrefab != null)
             Instantiate(_xpOrbPrefab, transform.position, Quaternion.identity);
-
-        if (_powerOrbPrefab != null)
-            Instantiate(_powerOrbPrefab, transform.position, Quaternion.identity);
 
         if (GameManager.Instance != null)
             GameManager.Instance.EnemyDestroyed(_enemyPoints, "Bullet");
