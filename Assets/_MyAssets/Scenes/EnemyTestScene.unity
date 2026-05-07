@@ -373,7 +373,7 @@ Transform:
   - {fileID: 2071274989}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1472165539
+--- !u!1001 &1307860757
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -383,11 +383,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 343331242494158325, guid: f2977a14fbc96db4e9cb5933a77959f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.88652
       objectReference: {fileID: 0}
     - target: {fileID: 343331242494158325, guid: f2977a14fbc96db4e9cb5933a77959f7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.40751
       objectReference: {fileID: 0}
     - target: {fileID: 343331242494158325, guid: f2977a14fbc96db4e9cb5933a77959f7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -423,15 +423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2084215906592870411, guid: f2977a14fbc96db4e9cb5933a77959f7, type: 3}
       propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2084215906592870411, guid: f2977a14fbc96db4e9cb5933a77959f7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5140403154008166547, guid: f2977a14fbc96db4e9cb5933a77959f7, type: 3}
-      propertyPath: _playerSpeed
-      value: 5
+      value: Player_Fireball
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -541,5 +533,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
-  - {fileID: 1472165539}
   - {fileID: 1045697635}
+  - {fileID: 1307860757}

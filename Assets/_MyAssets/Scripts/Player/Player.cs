@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -116,13 +117,13 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Player is dead");
+       
 
         OnPlayerDeath?.Invoke(this, EventArgs.Empty);
         _inputSystem_Actions.Player.Disable();
 
-        // option simple pour l'instant
-        gameObject.SetActive(false);
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
 

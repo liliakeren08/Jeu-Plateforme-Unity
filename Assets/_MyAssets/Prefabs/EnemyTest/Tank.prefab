@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8750374004114629217}
   - component: {fileID: 703027048570539544}
   - component: {fileID: 4392692064209618045}
-  - component: {fileID: 226771312966880602}
   - component: {fileID: 4251944589158716324}
+  - component: {fileID: 5966286066831525665}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Enemy
@@ -147,35 +147,6 @@ PolygonCollider2D:
       - {x: 0.5, y: 0}
       - {x: 0.25, y: 0.43359375}
   m_UseDelaunayMesh: 1
---- !u!114 &226771312966880602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5353232651572121680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 533937e10547ccf429c8f4ba23a063a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  _enemyPoints: 10
-  _enemyAttackPrefab: {fileID: 2921425504969256181, guid: c5ebaa2fd2978c240b94e90408b4b663, type: 3}
-  _xpOrbPrefab: {fileID: 0}
-  _powerOrbPrefab: {fileID: 8420798550951669539, guid: d2a9e2dcc18482348b0b3da3204383aa, type: 3}
-  _enemySpeed: 3
-  _knockbackForce: 5
-  _knockbackDuration: 0.2
-  _canAttack: 0
-  _pointsMinToStartAttack: 500
-  _fireRateMin: 2
-  _fireRateMax: 4
-  _maxHealth: 1
-  _damageOnContact: 1
-  _orbitsPlayer: 0
-  _orbitRadius: 3
-  _orbitSpeed: 90
-  _orbitCloseSpeed: 0.3
 --- !u!50 &4251944589158716324
 Rigidbody2D:
   serializedVersion: 5
@@ -203,3 +174,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5966286066831525665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5353232651572121680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6b83e7112c382439c222f4fbdfea7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyTank
+  _enemyPoints: 20
+  _xpOrbPrefab: {fileID: 2315933310648518095, guid: 33c543fe3faa6bc4cadf752718a37320, type: 3}
+  _enemySpeed: 3
+  _knockbackForce: 5
+  _knockbackDuration: 0.2
+  _maxHealth: 1
+  _damageOnContact: 1
+  _orbitsPlayer: 1
+  _orbitRadius: 3
+  _orbitSpeed: 90
+  _orbitCloseSpeed: 0.3

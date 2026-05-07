@@ -64,7 +64,13 @@ public class EnemySpawner : MonoBehaviour
         if (elapsed < 180f)
             return 0.95f;
 
-        return 0.8f;
+        if (elapsed < 210f)
+            return 0.8f;
+
+        if (elapsed < 260f)
+            return 0.6f;
+
+        return 0.4f;
     }
 
     private void SpawnEnemy()
