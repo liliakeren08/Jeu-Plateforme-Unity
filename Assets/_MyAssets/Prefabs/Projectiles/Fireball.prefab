@@ -155,3 +155,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 780d3313cd7f3614bb338728cb44936c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fireball
+  _homingStrengh: 0.5
+  _homingRange: 3
