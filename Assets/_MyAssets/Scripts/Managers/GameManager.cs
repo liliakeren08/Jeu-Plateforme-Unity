@@ -63,6 +63,10 @@ public class GameManager : MonoBehaviour
         if (p_gameObjectTag == "Bullet")
         {
             _playerScore += p_enemyPoints; // Ajout des points de l'ennemi au score du joueur
+            if (UIGame.Instance != null)
+            {
+                UIGame.Instance.UpdateScoreDisplay();
+            }
         }
 
         OnEnemyDestroyed?.Invoke(this, new OnEnemyDestroyedEventArgs
