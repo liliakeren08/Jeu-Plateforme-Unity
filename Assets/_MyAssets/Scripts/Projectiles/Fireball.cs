@@ -5,6 +5,13 @@ public class Fireball : MonoBehaviour
     private float _speed = 6f;
     private Vector3 _direction = Vector3.right;
     private static readonly Vector3 BASE_SCALE = new Vector3(0.3f, 0.3f, 0.3f);
+    private Camera cam;
+
+
+    private void Start()
+    {
+        cam = Camera.main;
+    }
 
     public void Init(float speed, Vector3 direction, float scale = 1f)
     {
@@ -16,6 +23,13 @@ public class Fireball : MonoBehaviour
 
     private void Update()
     {
+        Vector3 viewPos = cam.WorldToViewportPoint(transform.position);
+
+        if (viewPos.x < -0.1f || viewPos.x > 1.1f ||
+            viewPos.y < -0.1f || viewPos.y > 1.1f)
+        {
+            Destroy(gameObject);
+        }
         transform.position += _direction * _speed * Time.deltaTime;
     }
 }

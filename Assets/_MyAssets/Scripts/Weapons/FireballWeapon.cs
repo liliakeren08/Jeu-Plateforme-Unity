@@ -4,8 +4,8 @@ using UnityEngine;
 public class FireballWeapon : Weapons
 {
     [SerializeField] private GameObject _fireballPrefab;
-    [SerializeField] private float _cooldown = 0.7f;
-    [SerializeField] private float _speed = 6f;
+    [SerializeField] private float _cooldown = 0.1f;
+    [SerializeField] private float _speed = 40f;
     [SerializeField] private float _weaponLvl = 1f;
     private float _sizeMultiplier = 1f;
     private int _projectileCount = 1;
@@ -62,7 +62,7 @@ public class FireballWeapon : Weapons
             return;
         }
 
-        Vector2 baseDir = player.GetLastDirection().normalized;
+        Vector2 baseDir = -player.GetLastDirection().normalized;
 
         for (int i = 0; i < _projectileCount; i++)
         {

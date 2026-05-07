@@ -1,8 +1,6 @@
-using System;
-using Random = UnityEngine.Random;
 using System.Collections;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -11,51 +9,105 @@ public class EnemySpawner : MonoBehaviour
     public GameObject tankPrefab;
     public GameObject bossPrefab;
 
-    [Header("Difficulty Settings")]
-    public float initialSpawnInterval = 3f;
-    public float minSpawnInterval = 0.6f;
-    public float difficultyRampTime = 60f;
+    [Header("Boss Settings")]
+    public float firstBossTime = 90f;
+    public float bossInterval = 120f;
 
     private Camera cam;
+    private float elapsed;
+    private float nextBossTime;
 
     private void Start()
     {
         cam = Camera.main;
+        nextBossTime = firstBossTime;
+
         StartCoroutine(SpawnLoop());
     }
 
     private IEnumerator SpawnLoop()
     {
-        float elapsed = 0f;
-
         while (true)
         {
-            float t = Mathf.Clamp01(elapsed / difficultyRampTime);
-            float interval = Mathf.Lerp(initialSpawnInterval, minSpawnInterval, t);
+            elapsed = Time.timeSinceLevelLoad;
 
-            SpawnEnemy(elapsed);
+            float interval = GetSpawnInterval();
+
+            
+            SpawnEnemy();
+
+            
+            if (elapsed >= nextBossTime)
+            {
+                SpawnBoss();
+                nextBossTime += bossInterval;
+            }
 
             yield return new WaitForSeconds(interval);
-            elapsed += interval;
         }
     }
 
-    private void SpawnEnemy(float elapsed)
+    private float GetSpawnInterval()
     {
-        GameObject prefab = ChooseEnemyType(elapsed);
+        if (elapsed < 20f)
+            return 2.0f;
+
+        if (elapsed < 45f)
+            return 1.6f;
+
+        if (elapsed < 75f)
+            return 1.3f;
+
+        if (elapsed < 120f)
+            return 1.1f;
+
+        if (elapsed < 180f)
+            return 0.95f;
+
+        if (elapsed < 210f)
+            return 0.8f;
+
+        if (elapsed < 260f)
+            return 0.6f;
+
+        return 0.4f;
+    }
+
+    private void SpawnEnemy()
+    {
+        GameObject prefab = ChooseEnemyType();
         Vector2 pos = GetPerimeterSpawnPoint();
+
         Instantiate(prefab, pos, Quaternion.identity);
     }
 
-    private GameObject ChooseEnemyType(float elapsed)
+    private void SpawnBoss()
     {
-        if (elapsed < 20f) return chaserPrefab;
-        if (elapsed < 40f) return Random.value < 0.7f ? chaserPrefab : tankPrefab;
+        Vector2 pos = GetPerimeterSpawnPoint();
 
-        float roll = Random.value;
-        if (roll < 0.5f) return chaserPrefab;
-        if (roll < 0.75f) return tankPrefab;
-        return bossPrefab;
+        Instantiate(bossPrefab, pos, Quaternion.identity);
+    }
+
+    private GameObject ChooseEnemyType()
+    {
+        // Seulement des petits ennemis au début
+        if (elapsed < 60f)
+        {
+            return chaserPrefab;
+        }
+
+        // Quelques tanks après 1 minute
+        if (elapsed < 180f)
+        {
+            return Random.value < 0.85f
+                ? chaserPrefab
+                : tankPrefab;
+        }
+
+        // Late game
+        return Random.value < 0.65f
+            ? chaserPrefab
+            : tankPrefab;
     }
 
     private Vector2 GetPerimeterSpawnPoint()
@@ -64,6 +116,7 @@ public class EnemySpawner : MonoBehaviour
         float camW = camH * cam.aspect + 0.5f;
 
         int edge = Random.Range(0, 4);
+
         return edge switch
         {
             0 => new Vector2(Random.Range(-camW, camW), camH),

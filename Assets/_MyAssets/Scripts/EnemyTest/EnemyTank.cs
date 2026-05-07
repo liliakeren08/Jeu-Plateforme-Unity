@@ -1,37 +1,28 @@
 using System;
 using UnityEngine;
 
-public class EnemyBoss : MonoBehaviour
+public class EnemyTank : MonoBehaviour
 {
-    [SerializeField] private int _enemyPoints = 10; 
-    [SerializeField] private GameObject _enemyAttackPrefab; 
+    [SerializeField] private int _enemyPoints = 20; 
     //[SerializeField] private GameObject _explosionAnim; 
     [SerializeField] private GameObject _xpOrbPrefab; 
-    [SerializeField] private GameObject _powerOrbPrefab; 
     
     [Header("Mouvement")]
     [SerializeField] private float _enemySpeed = 3f; 
     [SerializeField] private float _knockbackForce = 5f; 
     [SerializeField] private float _knockbackDuration = 0.2f; 
 
-    [Header("Attaque")]
-    [SerializeField] private bool _canAttack = false; 
-    [SerializeField] private int _pointsMinToStartAttack = 500; 
-    [SerializeField] private float _fireRateMin = 2f; 
-    [SerializeField] private float _fireRateMax = 4f; 
-
     [Header("Santé")]
     [SerializeField] private float _maxHealth = 1f; 
     [SerializeField] private float _damageOnContact = 1f; 
 
-    [Header("Orbite (Boss seulement)")]
-    [SerializeField] private bool _orbitsPlayer = false; 
+    [Header("Orbite")]
+    [SerializeField] private bool _orbitsPlayer = true; 
     [SerializeField] private float _orbitRadius = 3f; 
     [SerializeField] private float _orbitSpeed = 90f; 
     [SerializeField] private float _orbitCloseSpeed = 0.3f; 
 
     private float _currentHealth;
-    private float _canFire = 0f;
     private bool _isKnockback = false;
     private float _knockbackTimer = 0f;
     private float _orbitAngle = 0f;
@@ -46,12 +37,6 @@ public class EnemyBoss : MonoBehaviour
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
             _player = playerObj.transform;
-    }
-
-    private void Update()
-    {
-        if (_canAttack)
-            EnemyAttack();
     }
 
     private void FixedUpdate()
@@ -95,17 +80,6 @@ public class EnemyBoss : MonoBehaviour
         _rb.linearVelocity = dir * _enemySpeed;
     }
 
-    private void EnemyAttack()
-    {
-        if (_enemyAttackPrefab == null) return;
-        if (GameManager.Instance.PlayerScore < _pointsMinToStartAttack) return;
-        if (Time.time < _canFire) return;
-
-        Instantiate(_enemyAttackPrefab, transform.position + new Vector3(0f, -1.1f, 0f), Quaternion.identity);
-        float fireRate = UnityEngine.Random.Range(_fireRateMin, _fireRateMax);
-        _canFire = Time.time + fireRate;
-    }
-
     public void TakeDamage(float amount)
     {
         _currentHealth -= amount;
@@ -120,9 +94,6 @@ public class EnemyBoss : MonoBehaviour
 
         if (_xpOrbPrefab != null)
             Instantiate(_xpOrbPrefab, transform.position, Quaternion.identity);
-
-        if (_powerOrbPrefab != null)
-            Instantiate(_powerOrbPrefab, transform.position, Quaternion.identity);
 
         if (GameManager.Instance != null)
             GameManager.Instance.EnemyDestroyed(_enemyPoints, "Bullet");

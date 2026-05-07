@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6372801468106957782}
   - component: {fileID: 6244529734109390943}
   - component: {fileID: 1382637312668944428}
-  - component: {fileID: 6046644207582901943}
   - component: {fileID: 4380667872336692758}
+  - component: {fileID: 7210818762126442585}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Enemy
@@ -147,24 +147,6 @@ PolygonCollider2D:
       - {x: 0.5, y: 0}
       - {x: 0.25, y: 0.43359375}
   m_UseDelaunayMesh: 1
---- !u!114 &6046644207582901943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9003545115738624286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 533937e10547ccf429c8f4ba23a063a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  _enemySpeed: 3
-  _enemyAttackPrefab: {fileID: 0}
-  _explosionAnim: {fileID: 0}
-  _PointsMinToStartAttack: 500
-  _knockbackForce: 5
-  _knockbackDuration: 0.2
 --- !u!50 &4380667872336692758
 Rigidbody2D:
   serializedVersion: 5
@@ -192,3 +174,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &7210818762126442585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9003545115738624286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00a993ca596a2ef47bb3af52562dad30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  _enemyPoints: 30
+  _enemyAttackPrefab: {fileID: 2681285719720561147, guid: 87bf7e232a228634b9d419fe9904d74d, type: 3}
+  _xpOrbPrefab: {fileID: 8420798550951669539, guid: d2a9e2dcc18482348b0b3da3204383aa, type: 3}
+  _enemySpeed: 3
+  _knockbackForce: 5
+  _knockbackDuration: 0.2
+  _canAttack: 1
+  _pointsMinToStartAttack: 500
+  _fireRateMin: 2
+  _fireRateMax: 4
+  _maxHealth: 1
+  _damageOnContact: 1
+  _orbitsPlayer: 1
+  _orbitRadius: 3
+  _orbitSpeed: 90
+  _orbitCloseSpeed: 0.3

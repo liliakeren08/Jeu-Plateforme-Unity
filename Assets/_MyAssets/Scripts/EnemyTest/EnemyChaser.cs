@@ -1,40 +1,24 @@
 using System;
 using UnityEngine;
 
-public class EnemyBoss : MonoBehaviour
+public class EnemyChaser : MonoBehaviour
 {
     [SerializeField] private int _enemyPoints = 10; 
-    [SerializeField] private GameObject _enemyAttackPrefab; 
     //[SerializeField] private GameObject _explosionAnim; 
     [SerializeField] private GameObject _xpOrbPrefab; 
-    [SerializeField] private GameObject _powerOrbPrefab; 
     
     [Header("Mouvement")]
     [SerializeField] private float _enemySpeed = 3f; 
     [SerializeField] private float _knockbackForce = 5f; 
     [SerializeField] private float _knockbackDuration = 0.2f; 
 
-    [Header("Attaque")]
-    [SerializeField] private bool _canAttack = false; 
-    [SerializeField] private int _pointsMinToStartAttack = 500; 
-    [SerializeField] private float _fireRateMin = 2f; 
-    [SerializeField] private float _fireRateMax = 4f; 
-
     [Header("Santé")]
     [SerializeField] private float _maxHealth = 1f; 
-    [SerializeField] private float _damageOnContact = 1f; 
-
-    [Header("Orbite (Boss seulement)")]
-    [SerializeField] private bool _orbitsPlayer = false; 
-    [SerializeField] private float _orbitRadius = 3f; 
-    [SerializeField] private float _orbitSpeed = 90f; 
-    [SerializeField] private float _orbitCloseSpeed = 0.3f; 
+    [SerializeField] private float _damageOnContact = 1f;
 
     private float _currentHealth;
-    private float _canFire = 0f;
     private bool _isKnockback = false;
     private float _knockbackTimer = 0f;
-    private float _orbitAngle = 0f;
     private Transform _player;
     private Rigidbody2D _rb;
 
@@ -46,12 +30,6 @@ public class EnemyBoss : MonoBehaviour
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
             _player = playerObj.transform;
-    }
-
-    private void Update()
-    {
-        if (_canAttack)
-            EnemyAttack();
     }
 
     private void FixedUpdate()
@@ -66,10 +44,10 @@ public class EnemyBoss : MonoBehaviour
             return;
         }
 
-        if (_orbitsPlayer)
-            OrbitMovement();
-        else
+        if (_maxHealth > 0)
+        {
             ChaseMovement();
+        }
     }
 
     private void ChaseMovement()
@@ -77,33 +55,6 @@ public class EnemyBoss : MonoBehaviour
         // Déplacement de l'ennemi en direction du joueur
         Vector2 direction = (_player.position - transform.position).normalized;
         _rb.linearVelocity = direction * _enemySpeed;
-    }
-
-    private void OrbitMovement()
-    {
-        // L'ennemi orbite autour du joueur en resserrant progressivement son rayon
-        _orbitAngle += _orbitSpeed * Time.fixedDeltaTime;
-        _orbitRadius = Mathf.Max(1.2f, _orbitRadius - _orbitCloseSpeed * Time.fixedDeltaTime);
-
-        float rad = _orbitAngle * Mathf.Deg2Rad;
-        Vector2 targetPos = (Vector2)_player.position + new Vector2(
-            Mathf.Cos(rad) * _orbitRadius,
-            Mathf.Sin(rad) * _orbitRadius
-        );
-
-        Vector2 dir = (targetPos - (Vector2)transform.position).normalized;
-        _rb.linearVelocity = dir * _enemySpeed;
-    }
-
-    private void EnemyAttack()
-    {
-        if (_enemyAttackPrefab == null) return;
-        if (GameManager.Instance.PlayerScore < _pointsMinToStartAttack) return;
-        if (Time.time < _canFire) return;
-
-        Instantiate(_enemyAttackPrefab, transform.position + new Vector3(0f, -1.1f, 0f), Quaternion.identity);
-        float fireRate = UnityEngine.Random.Range(_fireRateMin, _fireRateMax);
-        _canFire = Time.time + fireRate;
     }
 
     public void TakeDamage(float amount)
@@ -120,9 +71,6 @@ public class EnemyBoss : MonoBehaviour
 
         if (_xpOrbPrefab != null)
             Instantiate(_xpOrbPrefab, transform.position, Quaternion.identity);
-
-        if (_powerOrbPrefab != null)
-            Instantiate(_powerOrbPrefab, transform.position, Quaternion.identity);
 
         if (GameManager.Instance != null)
             GameManager.Instance.EnemyDestroyed(_enemyPoints, "Bullet");

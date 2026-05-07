@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/_MyAssets/SceneLilia/UIStart.unity
     guid: 88a633dd08a011e49a9bac5f16b7f71d
   - enabled: 1
+    path: Assets/_MyAssets/Scenes/GameScene.unity
+    guid: 239e21f65a8eeee4c98b830a715604b5
+  - enabled: 1
     path: Assets/_MyAssets/SceneLilia/UIEnd.unity
     guid: 9e78710ee80c859459cd8e680331d02c
   m_configObjects:

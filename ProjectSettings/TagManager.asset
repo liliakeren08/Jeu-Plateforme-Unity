@@ -8,6 +8,7 @@ TagManager:
   - Xp
   - Bullet
   - Enemy
+  - EnemyAttack
   layers:
   - Default
   - TransparentFX
@@ -42,6 +43,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 783192713
+    locked: 0
+  - name: ForeGround
+    uniqueID: 111321949
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

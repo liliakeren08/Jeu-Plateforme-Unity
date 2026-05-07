@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4101464318757093449}
   - component: {fileID: 1682869511653972915}
   - component: {fileID: 8597898153188081402}
-  - component: {fileID: -2842497241501888582}
   - component: {fileID: -6737399609296181629}
+  - component: {fileID: 5845406917527456033}
   m_Layer: 0
   m_Name: Chaser
   m_TagString: Enemy
@@ -147,24 +147,6 @@ PolygonCollider2D:
       - {x: 0.5, y: 0}
       - {x: 0.25, y: 0.43359375}
   m_UseDelaunayMesh: 1
---- !u!114 &-2842497241501888582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5666490486633273622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 533937e10547ccf429c8f4ba23a063a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  _enemySpeed: 3
-  _enemyAttackPrefab: {fileID: 0}
-  _explosionAnim: {fileID: 0}
-  _PointsMinToStartAttack: 500
-  _knockbackForce: 5
-  _knockbackDuration: 0.2
 --- !u!50 &-6737399609296181629
 Rigidbody2D:
   serializedVersion: 5
@@ -192,3 +174,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5845406917527456033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5666490486633273622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a85b4690cdcf304ba4b85ba51405797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyChaser
+  _enemyPoints: 10
+  _xpOrbPrefab: {fileID: 2315933310648518095, guid: 33c543fe3faa6bc4cadf752718a37320, type: 3}
+  _enemySpeed: 3
+  _knockbackForce: 5
+  _knockbackDuration: 0.2
+  _maxHealth: 1
+  _damageOnContact: 1
