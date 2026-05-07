@@ -159,12 +159,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533937e10547ccf429c8f4ba23a063a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _enemySpeed: 3
+  _enemyPoints: 5
   _enemyAttackPrefab: {fileID: 0}
-  _explosionAnim: {fileID: 0}
-  _PointsMinToStartAttack: 500
+  _xpOrbPrefab: {fileID: 2315933310648518095, guid: 33c543fe3faa6bc4cadf752718a37320, type: 3}
+  _powerOrbPrefab: {fileID: 0}
+  _enemySpeed: 3
   _knockbackForce: 5
   _knockbackDuration: 0.2
+  _canAttack: 0
+  _pointsMinToStartAttack: 500
+  _fireRateMin: 2
+  _fireRateMax: 4
+  _maxHealth: 1
+  _damageOnContact: 1
+  _orbitsPlayer: 0
+  _orbitRadius: 3
+  _orbitSpeed: 90
+  _orbitCloseSpeed: 0.3
 --- !u!50 &-6737399609296181629
 Rigidbody2D:
   serializedVersion: 5

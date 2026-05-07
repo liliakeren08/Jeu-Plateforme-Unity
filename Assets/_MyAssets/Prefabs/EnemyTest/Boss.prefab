@@ -158,13 +158,24 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 533937e10547ccf429c8f4ba23a063a6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  _enemyPoints: 20
+  _enemyAttackPrefab: {fileID: 2921425504969256181, guid: c5ebaa2fd2978c240b94e90408b4b663, type: 3}
+  _xpOrbPrefab: {fileID: 2315933310648518095, guid: 33c543fe3faa6bc4cadf752718a37320, type: 3}
+  _powerOrbPrefab: {fileID: 8420798550951669539, guid: d2a9e2dcc18482348b0b3da3204383aa, type: 3}
   _enemySpeed: 3
-  _enemyAttackPrefab: {fileID: 0}
-  _explosionAnim: {fileID: 0}
-  _PointsMinToStartAttack: 500
   _knockbackForce: 5
   _knockbackDuration: 0.2
+  _canAttack: 0
+  _pointsMinToStartAttack: 500
+  _fireRateMin: 2
+  _fireRateMax: 4
+  _maxHealth: 1
+  _damageOnContact: 1
+  _orbitsPlayer: 1
+  _orbitRadius: 3
+  _orbitSpeed: 90
+  _orbitCloseSpeed: 0.3
 --- !u!50 &4380667872336692758
 Rigidbody2D:
   serializedVersion: 5

@@ -8,6 +8,7 @@ TagManager:
   - Xp
   - Bullet
   - Enemy
+  - EnemyAttack
   layers:
   - Default
   - TransparentFX
