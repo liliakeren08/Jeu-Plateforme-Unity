@@ -1,19 +1,20 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyChaser : MonoBehaviour
 {
-    [SerializeField] private int _enemyPoints = 10; 
-    //[SerializeField] private GameObject _explosionAnim; 
-    [SerializeField] private GameObject _xpOrbPrefab; 
-    
+    [SerializeField] private int _enemyPoints = 10;
+    //[SerializeField] private GameObject _explosionAnim;
+    [SerializeField] private GameObject _xpOrbPrefab;
+
     [Header("Mouvement")]
-    [SerializeField] private float _enemySpeed = 3f; 
-    [SerializeField] private float _knockbackForce = 5f; 
-    [SerializeField] private float _knockbackDuration = 0.2f; 
+    [SerializeField] private float _enemySpeed = 2f;
+    [SerializeField] private float _knockbackForce = 5f;
+    [SerializeField] private float _knockbackDuration = 0.2f;
 
     [Header("Santé")]
-    [SerializeField] private float _maxHealth = 1f; 
+    [SerializeField] private float _maxHealth = 1f;
     [SerializeField] private float _damageOnContact = 1f;
 
     private float _currentHealth;
@@ -44,15 +45,7 @@ public class EnemyChaser : MonoBehaviour
             return;
         }
 
-        if (_maxHealth > 0)
-        {
-            ChaseMovement();
-        }
-    }
-
-    private void ChaseMovement()
-    {
-        // Déplacement de l'ennemi en direction du joueur
+        // Fonce directement vers le joueur
         Vector2 direction = (_player.position - transform.position).normalized;
         _rb.linearVelocity = direction * _enemySpeed;
     }
@@ -80,9 +73,8 @@ public class EnemyChaser : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"[Enemy] Collision avec: {collision.gameObject.tag}");
-
-        if (collision.CompareTag("Enemy") || collision.CompareTag("EnemyAttack")) return;
+        if (collision.CompareTag("Enemy") || collision.CompareTag("EnemyAttack")
+            || collision.CompareTag("Xp") || collision.CompareTag("Power")) return;
 
         if (collision.CompareTag("Bullet"))
         {

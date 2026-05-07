@@ -49,28 +49,14 @@ public class EnemySpawner : MonoBehaviour
 
     private float GetSpawnInterval()
     {
-        if (elapsed < 20f)
-            return 2.0f;
-
-        if (elapsed < 45f)
-            return 1.6f;
-
-        if (elapsed < 75f)
-            return 1.3f;
-
-        if (elapsed < 120f)
-            return 1.1f;
-
-        if (elapsed < 180f)
-            return 0.95f;
-
-        if (elapsed < 210f)
-            return 0.8f;
-
-        if (elapsed < 260f)
-            return 0.6f;
-
-        return 0.4f;
+        if (elapsed < 20f) return 5.0f;
+        if (elapsed < 45f) return 4.0f;
+        if (elapsed < 75f) return 3.5f;
+        if (elapsed < 120f) return 3.0f;
+        if (elapsed < 180f) return 2.5f;
+        if (elapsed < 210f) return 2.0f;
+        if (elapsed < 260f) return 1.5f;
+        return 1.0f;
     }
 
     private void SpawnEnemy()
@@ -90,24 +76,21 @@ public class EnemySpawner : MonoBehaviour
 
     private GameObject ChooseEnemyType()
     {
-        // Seulement des petits ennemis au début
+        if (elapsed < 20f)
+            return chaserPrefab;
+
         if (elapsed < 60f)
         {
-            return chaserPrefab;
+            float roll = Random.value;
+            if (roll < 0.7f) return chaserPrefab;
+            return tankPrefab;
         }
 
-        // Quelques tanks après 1 minute
-        if (elapsed < 180f)
-        {
-            return Random.value < 0.85f
-                ? chaserPrefab
-                : tankPrefab;
-        }
-
-        // Late game
-        return Random.value < 0.65f
-            ? chaserPrefab
-            : tankPrefab;
+        // Après 1 minute — les 3 types
+        float r = Random.value;
+        if (r < 0.55f) return chaserPrefab;
+        if (r < 0.85f) return tankPrefab;
+        return bossPrefab;
     }
 
     private Vector2 GetPerimeterSpawnPoint()
