@@ -222,6 +222,10 @@ PrefabInstance:
       propertyPath: _PlayerXpCap
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6180751803301022783, guid: f2977a14fbc96db4e9cb5933a77959f7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -281,7 +285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1709309095
 Transform:
   m_ObjectHideFlags: 0
