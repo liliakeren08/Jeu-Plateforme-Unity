@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class FireballWeapon : Weapons
@@ -7,32 +6,26 @@ public class FireballWeapon : Weapons
     [SerializeField] private float _cooldown = 0.1f;
     [SerializeField] private float _speed = 40f;
     [SerializeField] private float _weaponLvl = 1f;
+
     private float _sizeMultiplier = 1f;
     private int _projectileCount = 1;
     private float _spreadAngle = 15f;
 
-    private Player player; 
-
+    private Player player;
     private float _timer;
 
-   
     public override void Init(Player player)
     {
         this.player = player;
 
-        
-        player.OnPlayerUp += Player_OnPlayerUp;
+        if (player != null)
+            player.OnPlayerUp += Player_OnPlayerUp;
     }
-
-    
 
     private void OnDisable()
     {
-       
         if (player != null)
-        {
             player.OnPlayerUp -= Player_OnPlayerUp;
-        }
     }
 
     private void Player_OnPlayerUp(object sender, Player.OnPlayerUpEventArgs e)
@@ -58,11 +51,17 @@ public class FireballWeapon : Weapons
     {
         if (player == null)
         {
-            Debug.LogWarning("Player non assigné ");
+            Debug.LogWarning("Player non assigné");
             return;
         }
 
         Vector2 baseDir = -player.GetLastDirection().normalized;
+
+        // ✅ FIREPOINT PROPRE (plus de Find)
+        Transform firePoint = player.FirePoint;
+        Vector3 spawnPos = firePoint != null
+            ? firePoint.position
+            : player.transform.position;
 
         for (int i = 0; i < _projectileCount; i++)
         {
@@ -78,7 +77,7 @@ public class FireballWeapon : Weapons
 
             GameObject fbObj = Instantiate(
                 _fireballPrefab,
-                player.transform.position,
+                spawnPos,
                 Quaternion.identity
             );
 
@@ -96,7 +95,7 @@ public class FireballWeapon : Weapons
         switch (level)
         {
             case 2:
-                _cooldown -= 0.5f; 
+                _cooldown -= 0.5f;
                 break;
 
             case 3:
@@ -111,21 +110,23 @@ public class FireballWeapon : Weapons
                 break;
 
             case 5:
-                _projectileCount = 3; 
+                _projectileCount = 3;
                 break;
+
             case 6:
                 _sizeMultiplier += 0.5f;
                 break;
+
             case 7:
                 _sizeMultiplier += 0.2f;
                 _cooldown -= 0.3f;
                 _speed += 2f;
                 break;
+
             case 8:
                 _projectileCount = 5;
                 _spreadAngle = 10f;
                 break;
-
 
             default:
                 break;

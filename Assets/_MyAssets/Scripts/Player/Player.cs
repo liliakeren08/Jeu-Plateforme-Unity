@@ -4,18 +4,21 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] private float _playerSpeed = 5f;
+    [SerializeField] private float _maxHeight = 5f;
+    [SerializeField] private float _minHeight = -5f;
 
+    [Header("Stats")]
     [SerializeField] private float _PlayerXpCap = 6f;
     [SerializeField] private float _PlayerCurentXp = 0f;
     [SerializeField] private float _PlayerCurentLvl = 1f;
     [SerializeField] private float _playerLife = 20f;
 
+    [Header("Weapons")]
     [SerializeField] private WeaponManager _weaponManager;
     [SerializeField] private Weapons _startingWeapon;
-
-    [SerializeField] private float _maxHeight = 5f;
-    [SerializeField] private float _minHeight = -5f;
+    [SerializeField] private Transform _firePoint;
 
     private Vector2 _lastDirection = Vector2.right;
 
@@ -25,8 +28,11 @@ public class Player : MonoBehaviour
     public float PlayerCurentXp => _PlayerCurentXp;
     public float PlayerSpeed => _playerSpeed;
 
+    public Transform FirePoint => _firePoint; // ✅ IMPORTANT
+
     private InputSystem_Actions _inputSystem_Actions;
     private PolygonCollider2D _collider;
+    private Camera _cam;
 
     public class OnPlayerUpEventArgs : EventArgs
     {
@@ -41,6 +47,7 @@ public class Player : MonoBehaviour
         _inputSystem_Actions.Player.Enable();
 
         _collider = GetComponent<PolygonCollider2D>();
+        _cam = Camera.main;
     }
 
     private void Update()
@@ -51,60 +58,58 @@ public class Player : MonoBehaviour
 
     private void PlayerMovement()
     {
-        Vector2 direction2D = _inputSystem_Actions.Player.Move.ReadValue<Vector2>();
+        Vector2 input = _inputSystem_Actions.Player.Move.ReadValue<Vector2>();
 
-        if (direction2D.x != 0)
-            _lastDirection = new Vector2(direction2D.x, 0).normalized;
+        if (input.x != 0)
+            _lastDirection = new Vector2(input.x, 0).normalized;
 
-        Vector3 movement = new Vector3(direction2D.x, direction2D.y, 0f);
+        Vector3 movement = new Vector3(input.x, input.y, 0f);
         transform.position += movement * _playerSpeed * Time.deltaTime;
 
-        // ✅ bounds du collider (toujours à jour)
+        ClampMovement();
+    }
+
+    private void ClampMovement()
+    {
+        if (_collider == null || _cam == null) return;
+
         Bounds b = _collider.bounds;
 
-        float halfWidth = b.extents.x;
-        float halfHeight = b.extents.y;
+        float halfW = b.extents.x;
+        float halfH = b.extents.y;
 
-        Camera mainCamera = Camera.main;
+        float minX = _cam.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + halfW;
+        float maxX = _cam.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - halfW;
 
-        float minX = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + halfWidth;
-        float maxX = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - halfWidth;
+        float minY = _minHeight + halfH;
+        float maxY = _maxHeight - halfH;
 
-        // ✅ FIX demandé : limite bas + haut
-        float minY = _minHeight + halfHeight;
-        float maxY = _maxHeight - halfHeight;
+        Vector3 pos = transform.position;
 
-        float clampedX = Mathf.Clamp(transform.position.x, minX, maxX);
-        float clampedY = Mathf.Clamp(transform.position.y, minY, maxY);
+        pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        pos.y = Mathf.Clamp(pos.y, minY, maxY);
 
-        transform.position = new Vector2(clampedX, clampedY);
+        transform.position = pos;
     }
 
     private void PlayerLvlUp()
     {
         if (_PlayerCurentXp >= _PlayerXpCap)
         {
-            LevelUp();
-            Debug.Log("Lv: " + _PlayerCurentLvl);
+            _PlayerCurentLvl++;
+            _PlayerXpCap += 5f;
+            _PlayerCurentXp = 0f;
+
+            OnPlayerUp?.Invoke(this, new OnPlayerUpEventArgs
+            {
+                newLevel = _PlayerCurentLvl
+            });
         }
     }
 
     public void AddXP(float amount)
     {
         _PlayerCurentXp += amount;
-    }
-
-    private void LevelUp()
-    {
-        _PlayerCurentLvl++;
-
-        _PlayerXpCap += 5f;
-        _PlayerCurentXp = 0f;
-
-        OnPlayerUp?.Invoke(this, new OnPlayerUpEventArgs
-        {
-            newLevel = _PlayerCurentLvl
-        });
     }
 
     public Vector2 GetLastDirection()
@@ -117,21 +122,22 @@ public class Player : MonoBehaviour
         _playerLife -= damage;
 
         if (_playerLife <= 0)
-        {
             Die();
-        }
     }
 
     private void Die()
     {
         OnPlayerDeath?.Invoke(this, EventArgs.Empty);
-        _inputSystem_Actions.Player.Disable();
+
+        if (_inputSystem_Actions != null)
+            _inputSystem_Actions.Player.Disable();
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void OnDestroy()
     {
-        _inputSystem_Actions.Player.Disable();
+        if (_inputSystem_Actions != null)
+            _inputSystem_Actions.Player.Disable();
     }
 }
