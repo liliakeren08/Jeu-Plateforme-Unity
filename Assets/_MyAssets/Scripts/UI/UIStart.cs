@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class UIStart : MonoBehaviour
+public class UIStart : UI
 {
     [Header("Buttons")]
     [SerializeField] private Button _startButton;
