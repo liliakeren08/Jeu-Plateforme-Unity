@@ -47,7 +47,7 @@ public class Fireball : MonoBehaviour
     {
         if (sr == null) return;
 
-        // ✔ flip selon direction X
+        
         if (_direction.x < 0)
             sr.flipX = true;
         else

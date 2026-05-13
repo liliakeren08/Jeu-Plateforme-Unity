@@ -4,7 +4,7 @@ public class FireballWeapon : Weapons
 {
     [SerializeField] private GameObject _fireballPrefab;
     [SerializeField] private float _cooldown = 0.1f;
-    [SerializeField] private float _speed = 40f;
+    [SerializeField] private float _speed = 5f;
     [SerializeField] private float _weaponLvl = 1f;
 
     private float _sizeMultiplier = 1f;
@@ -57,7 +57,7 @@ public class FireballWeapon : Weapons
 
         Vector2 baseDir = -player.GetLastDirection().normalized;
 
-        // ✅ FIREPOINT PROPRE (plus de Find)
+        
         Transform firePoint = player.FirePoint;
         Vector3 spawnPos = firePoint != null
             ? firePoint.position
