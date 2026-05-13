@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem; // Nécessaire pour le callback
+using UnityEngine.InputSystem; // Nï¿½cessaire pour le callback
 
 public class MusicManager : MonoBehaviour
 {
@@ -44,7 +44,7 @@ public class MusicManager : MonoBehaviour
         _audioSource.loop = true;
         _audioSource.Play();
 
-        // 3. Mise à jour visuelle initiale
+        // 3. Mise ï¿½ jour visuelle initiale
         UpdateVisuals();
     }
 
@@ -55,7 +55,7 @@ public class MusicManager : MonoBehaviour
 
     public void OnMuteClick()
     {
-        // On inverse l'état
+        // On inverse l'ï¿½tat
         _isMuted = !_isMuted;
 
         // On applique au moteur audio
@@ -69,14 +69,14 @@ public class MusicManager : MonoBehaviour
     {
         if (_muteImageDisplay != null)
         {
-            // On switch le sprite selon l'état
+            // On switch le sprite selon l'ï¿½tat
             _muteImageDisplay.sprite = _isMuted ? _soundOffSprite : _soundOnSprite;
         }
     }
 
     private void OnDestroy()
     {
-        // Nettoyage de l'Input System (très important)
+        // Nettoyage de l'Input System (trï¿½s important)
         if (_inputSystem_Actions != null)
         {
             _inputSystem_Actions.Player.Mute.performed -= Mute_performed;
