@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class UIGame : MonoBehaviour
+public class UIGame :  UI
 {
     [Header("Configuration Score")]
     [SerializeField] private TextMeshProUGUI _scoreText;
