@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem; // Nécessaire pour le callback
+using UnityEngine.InputSystem; 
 
 public class MusicManager : MonoBehaviour
 {
@@ -10,9 +10,9 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private AudioClip _clipMusic;
 
     [Header("UI Configuration")]
-    [SerializeField] private Image _muteImageDisplay; // On glisse l'image du bouton ici
-    [SerializeField] private Sprite _soundOnSprite;   // Ton image "Son ON" (Cyan)
-    [SerializeField] private Sprite _soundOffSprite;  // Ton image "Son OFF" (Magenta)
+    [SerializeField] private Image _muteImageDisplay; 
+    [SerializeField] private Sprite _soundOnSprite;   
+    [SerializeField] private Sprite _soundOffSprite; 
 
     private InputSystem_Actions _inputSystem_Actions;
     private AudioSource _audioSource;

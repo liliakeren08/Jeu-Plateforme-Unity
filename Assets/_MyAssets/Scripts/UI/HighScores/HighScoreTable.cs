@@ -47,7 +47,7 @@ public class HighScoreTable : MonoBehaviour
         }
 
 
-        // Utiliser seulement pour des test ceci génère manuellement des 10 entrées pour la table
+        //Utiliser seulement pour des test ceci génère manuellement des 10 entrées pour la table
         //AddHighScoreEntry(14500, "DAV");
         //AddHighScoreEntry(3400, "ALX");
         //AddHighScoreEntry(700, "JOS");
@@ -101,7 +101,7 @@ public class HighScoreTable : MonoBehaviour
     private void CreateHighScoreEntryTransform(HighScoreEntry highScoreEntry, Transform container, List<Transform> transformList)
     {
         //positionne l'ajout dans la liste
-        float templateHeight = 50f;
+        float templateHeight = 45f;
         //Instancie une nouvelle ligne pour écrire la donnée
         Transform entryTransform = Instantiate(_entryTemplate, container);
         RectTransform entryRectTranform = entryTransform.GetComponent<RectTransform>(); 
@@ -130,23 +130,29 @@ public class HighScoreTable : MonoBehaviour
         // Couleur de fond différente pour les 3 premiers
         if (rank == 1)
         {
-            entryTransform.Find("background").GetComponent<Image>().color = new Color32(255, 210, 3, 71);
+            // Cyan Électrique (Meilleur score)
+            entryTransform.Find("background").GetComponent<Image>().color = new Color32(0, 255, 255, 80);
         }
         else if (rank == 2)
         {
-            entryTransform.Find("background").GetComponent<Image>().color = new Color32(203, 201, 193, 71);
+            // Magenta / Rose Néon
+            entryTransform.Find("background").GetComponent<Image>().color = new Color32(255, 0, 255, 70);
         }
         else if (rank == 3)
         {
-            entryTransform.Find("background").GetComponent<Image>().color = new Color32(176, 114, 26, 71);
+            // Violet profond
+            entryTransform.Find("background").GetComponent<Image>().color = new Color32(157, 0, 255, 60);
         }
         else
         {
+            // Transparent pour le reste de la liste
             entryTransform.Find("background").GetComponent<Image>().color = new Color32(255, 255, 255, 0);
         }
 
         transformList.Add(entryTransform);
     }
+
+
 
     // Méthode qui recoit le score et le nom et l'ajoute à la liste
     public void AddHighScoreEntry(int p_score, string p_name)

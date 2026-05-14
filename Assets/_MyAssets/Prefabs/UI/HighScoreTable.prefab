@@ -163,7 +163,7 @@ RectTransform:
   m_GameObject: {fileID: 461805035819485949}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2863891, y: 1.0154043, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3116051032850428220}
@@ -174,7 +174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -516.9698, y: -127}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6214149076403678963
@@ -299,8 +299,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.8886, y: 5.8342}
-  m_SizeDelta: {x: 527.8474, y: 555.0734}
+  m_AnchoredPosition: {x: 3.8884, y: -14.8495}
+  m_SizeDelta: {x: 527.85, y: 596.4407}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1779558782627013671
 CanvasRenderer:
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 4582079780070091139}
   - component: {fileID: 7691799345528279536}
   m_Layer: 5
-  m_Name: Background
+  m_Name: background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -512,7 +512,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 2.7113, y: 157.2906}
-  m_SizeDelta: {x: 526.4923, y: 71.4188}
+  m_SizeDelta: {x: 526.4923, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4582079780070091139
 CanvasRenderer:
@@ -625,7 +625,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8132958939083518841
 GameObject:
@@ -661,8 +661,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -192, y: 157.29}
-  m_SizeDelta: {x: 111.2813, y: 47.4651}
+  m_AnchoredPosition: {x: -180.32, y: 156.66}
+  m_SizeDelta: {x: 134.64, y: 48.732}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2412467773253440261
 CanvasRenderer:
@@ -829,7 +829,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HIGHTSCORES
+  m_text: RECORDS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8162e7e19ad05494da3ca58b0a0a3859, type: 2}
   m_sharedMaterial: {fileID: 4719980395906606144, guid: 8162e7e19ad05494da3ca58b0a0a3859, type: 2}
