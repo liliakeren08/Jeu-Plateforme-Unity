@@ -27,19 +27,21 @@ public class EnemyTank : MonoBehaviour
     private float _knockbackTimer = 0f;
     private bool _isDashing = false;
     private bool _isWindingUp = false;
-    private bool _isDead = false; // Empêche les coroutines de continuer après la mort
+    private bool _isDead = false;
     private Transform _player;
     private Rigidbody2D _rb;
     private Animator _animator;
+    private SpriteRenderer _spriteRenderer; // Pour le flash rouge
 
     private void Start()
     {
         _currentHealth = _maxHealth;
         _rb = GetComponent<Rigidbody2D>();
 
-        // On récupère l'Animator sur l'enfant TankVisual
+        // On récupère l'Animator et le SpriteRenderer sur l'enfant TankVisual
         Transform tankVisual = transform.Find("TankVisual");
         _animator = tankVisual.GetComponent<Animator>();
+        _spriteRenderer = tankVisual.GetComponent<SpriteRenderer>();
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -50,7 +52,6 @@ public class EnemyTank : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Si mort, on ne fait plus rien
         if (_player == null || _isDead) return;
 
         if (_isKnockback)
@@ -114,21 +115,31 @@ public class EnemyTank : MonoBehaviour
         _isDashing = false;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float damage)
     {
         if (_isDead) return;
-        _currentHealth -= amount;
+        _currentHealth -= damage;
+
+        // Clignotement rouge quand le Tank prend des dégâts
+        StartCoroutine(FlashRed());
+
         if (_currentHealth <= 0f)
             Die();
+    }
+
+    private IEnumerator FlashRed()
+    {
+        _spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        _spriteRenderer.color = Color.white;
     }
 
     private void Die()
     {
         _isDead = true;
 
-        // Trigger mort — l'animation joue jusqu'au bout grâce à Has Exit Time
+        // Trigger mort — l'animation joue jusqu'au bout
         _animator.SetTrigger("isDead");
-
         _rb.linearVelocity = Vector2.zero;
 
         if (_powerOrbPrefab != null)

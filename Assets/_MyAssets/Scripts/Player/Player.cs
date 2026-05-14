@@ -141,7 +141,7 @@ public class Player : MonoBehaviour
         if (_playerLife <= 0)
             Die();
     }
-
+    // Clignotement rouge quand le joueur prend des dégâts
     private IEnumerator FlashRed()
     {
         _spriteRenderer.color = Color.red;
@@ -150,13 +150,22 @@ public class Player : MonoBehaviour
     }
     private void Die()
     {
-        _animator.SetTrigger("isDead"); // Trigger au lieu de SetBool
+        _animator.SetTrigger("isDead");
 
         OnPlayerDeath?.Invoke(this, EventArgs.Empty);
 
         if (_inputSystem_Actions != null)
             _inputSystem_Actions.Player.Disable();
 
+        // On attend la fin de l'animation avant de charger la scène
+        StartCoroutine(LoadSceneAfterAnimation());
+    }
+
+    private IEnumerator LoadSceneAfterAnimation()
+    {
+        yield return null;
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        yield return new WaitForSeconds(stateInfo.length);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
