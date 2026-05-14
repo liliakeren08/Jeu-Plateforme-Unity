@@ -17,6 +17,7 @@ public class Fireball : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
     }
 
+
     public void Init(float speed, Vector3 direction, float scale = 1f)
     {
         _speed = speed;
@@ -66,6 +67,7 @@ public class Fireball : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 
     private GameObject FindNearestEnemy()
     {

@@ -6,8 +6,8 @@ public class Player : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float _playerSpeed = 5f;
-    [SerializeField] private float _maxHeight = 5f;
-    [SerializeField] private float _minHeight = -5f;
+    [SerializeField] private float _maxHeight = 10f;
+    [SerializeField] private float _minHeight = -10f;
 
     [Header("Stats")]
     [SerializeField] private float _PlayerXpCap = 6f;
@@ -27,8 +27,7 @@ public class Player : MonoBehaviour
 
     public float PlayerCurentXp => _PlayerCurentXp;
     public float PlayerSpeed => _playerSpeed;
-
-    public Transform FirePoint => _firePoint; 
+    public Transform FirePoint => _firePoint;
 
     private InputSystem_Actions _inputSystem_Actions;
     private PolygonCollider2D _collider;
@@ -40,18 +39,21 @@ public class Player : MonoBehaviour
     {
         public float newLevel;
     }
-
     private void Start()
     {
         _weaponManager.AddWeapon(_startingWeapon);
-        _animator = GetComponent<Animator>();
+
+        // On cible explicitement PlayerVisual pour éviter de prendre
+        // l'Animator d'un enfant comme Player_Fireball
+        Transform playerVisual = transform.Find("PlayerVisual");
+        _animator = playerVisual.GetComponent<Animator>();
+        _spriteRenderer = playerVisual.GetComponent<SpriteRenderer>();
 
         _inputSystem_Actions = new InputSystem_Actions();
         _inputSystem_Actions.Player.Enable();
 
         _collider = GetComponent<PolygonCollider2D>();
         _cam = Camera.main;
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -67,13 +69,9 @@ public class Player : MonoBehaviour
         _animator.SetBool("isWalking", input != Vector2.zero);
 
         if (input.x > 0)
-        {
             _spriteRenderer.flipX = true;
-        }
         else if (input.x < 0)
-        {
             _spriteRenderer.flipX = false;
-        }
 
         if (input.x != 0)
             _lastDirection = new Vector2(input.x, 0).normalized;
@@ -93,17 +91,19 @@ public class Player : MonoBehaviour
         float halfW = b.extents.x;
         float halfH = b.extents.y;
 
-        float minX = _cam.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + halfW;
-        float maxX = _cam.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - halfW;
+        // Fix : on passe la distance Z de la caméra pour que
+        // ViewportToWorldPoint calcule correctement les bords de l'écran
+        float camZ = Mathf.Abs(_cam.transform.position.z);
+
+        float minX = _cam.ViewportToWorldPoint(new Vector3(0, 0, camZ)).x + halfW;
+        float maxX = _cam.ViewportToWorldPoint(new Vector3(1, 0, camZ)).x - halfW;
 
         float minY = _minHeight + halfH;
         float maxY = _maxHeight - halfH;
 
         Vector3 pos = transform.position;
-
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
-
         transform.position = pos;
     }
 
@@ -142,7 +142,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        _animator.SetBool("isDead", true);
+        _animator.SetTrigger("isDead"); // Trigger au lieu de SetBool
 
         OnPlayerDeath?.Invoke(this, EventArgs.Empty);
 

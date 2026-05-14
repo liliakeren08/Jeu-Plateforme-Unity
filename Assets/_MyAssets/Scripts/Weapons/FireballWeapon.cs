@@ -55,9 +55,10 @@ public class FireballWeapon : Weapons
             return;
         }
 
+       
+
         Vector2 baseDir = -player.GetLastDirection().normalized;
 
-        
         Transform firePoint = player.FirePoint;
         Vector3 spawnPos = firePoint != null
             ? firePoint.position
@@ -66,7 +67,6 @@ public class FireballWeapon : Weapons
         for (int i = 0; i < _projectileCount; i++)
         {
             float angleOffset = 0f;
-
             if (_projectileCount > 1)
             {
                 float totalSpread = _spreadAngle * (_projectileCount - 1);
@@ -82,14 +82,12 @@ public class FireballWeapon : Weapons
             );
 
             Fireball fb = fbObj.GetComponent<Fireball>();
-
             if (fb != null)
             {
                 fb.Init(_speed, newDir, _sizeMultiplier);
             }
         }
     }
-
     private void ApplyLevelBonus(int level)
     {
         switch (level)
