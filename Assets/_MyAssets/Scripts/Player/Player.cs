@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -135,11 +136,18 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _playerLife -= damage;
+        StartCoroutine(FlashRed()); // Clignotement rouge quand le joueur prend des dégâts
 
         if (_playerLife <= 0)
             Die();
     }
 
+    private IEnumerator FlashRed()
+    {
+        _spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        _spriteRenderer.color = Color.white;
+    }
     private void Die()
     {
         _animator.SetTrigger("isDead"); // Trigger au lieu de SetBool
