@@ -10,13 +10,13 @@ public class UIStart : UI
     [Header("Buttons")]
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _returnButton;
-    [SerializeField] private Button _buttonClose; // AJOUTÉ : Pour fermer les instructions
+    [SerializeField] private Button _buttonClose; // AJOUT : Pour fermer les instructions
 
     [Header("Panels")]
     [SerializeField] private GameObject _instructionsPanel;
     [SerializeField] private GameObject _scorePanel;
     [SerializeField] private GameObject _startPanel;
-    [SerializeField] private GameObject _gameButtons; // AJOUTÉ : Ton objet MenuBouttons
+    [SerializeField] private GameObject _gameButtons; // AJOUT : Ton objet MenuBouttons
 
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _txtCompteur = default;
@@ -27,7 +27,7 @@ public class UIStart : UI
         int compteur = PlayerPrefs.GetInt("GamesCount", 0);
         _txtCompteur.text = "Nombre de parties : " + compteur.ToString();
 
-        // Sélectionne le bouton démarrer au chargement de la scène
+        // Slectionne le bouton dmarrer au chargement de la scne
         if (_startButton != null)
         {
             EventSystem.current.SetSelectedGameObject(null);
@@ -55,7 +55,7 @@ public class UIStart : UI
     public void OnInstructionsClick()
     {
         _instructionsPanel.SetActive(true);
-        _gameButtons.SetActive(false); // Désactive le menu principal
+        _gameButtons.SetActive(false); // Dsactive le menu principal
 
         // Focus sur le bouton fermer
         EventSystem.current.SetSelectedGameObject(null);
@@ -88,6 +88,14 @@ public class UIStart : UI
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
+        try 
+        {
+            System.Diagnostics.Process.Start("..\\Portail.exe");
+        } 
+        catch (System.Exception e) 
+        {
+            Debug.Log("Portail non trouvÃ©: " + e.Message);
+        }
         Application.Quit();
 #endif
     }

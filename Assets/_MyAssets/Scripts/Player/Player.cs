@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _firePoint;
 
     private Vector2 _lastDirection = Vector2.right;
+    private bool _isShooting = false;
 
     public event EventHandler<OnPlayerUpEventArgs> OnPlayerUp;
     public event EventHandler OnPlayerDeath;
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
     public float PlayerCurentXp => _PlayerCurentXp;
     public float PlayerSpeed => _playerSpeed;
     public Transform FirePoint => _firePoint;
+    public bool IsShooting => _isShooting;
 
     private InputSystem_Actions _inputSystem_Actions;
     private PolygonCollider2D _collider;
@@ -40,12 +42,11 @@ public class Player : MonoBehaviour
     {
         public float newLevel;
     }
+
     private void Start()
     {
         _weaponManager.AddWeapon(_startingWeapon);
 
-        // On cible explicitement PlayerVisual pour éviter de prendre
-        // l'Animator d'un enfant comme Player_Fireball
         Transform playerVisual = transform.Find("PlayerVisual");
         _animator = playerVisual.GetComponent<Animator>();
         _spriteRenderer = playerVisual.GetComponent<SpriteRenderer>();
@@ -60,6 +61,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         PlayerMovement();
+        PlayerShooting();
         PlayerLvlUp();
     }
 
@@ -70,9 +72,9 @@ public class Player : MonoBehaviour
         _animator.SetBool("isWalking", input != Vector2.zero);
 
         if (input.x > 0)
-            _spriteRenderer.flipX = false; // va à droite ? de face
+            _spriteRenderer.flipX = false;
         else if (input.x < 0)
-            _spriteRenderer.flipX = true;  // va à gauche ? retourné
+            _spriteRenderer.flipX = true;
 
         if (input.x != 0)
             _lastDirection = new Vector2(input.x, 0).normalized;
@@ -83,22 +85,29 @@ public class Player : MonoBehaviour
         ClampMovement();
     }
 
+    private void PlayerShooting()
+    {
+        // 1 appui = 1 tir (Semi-Automatique)
+        _isShooting = _inputSystem_Actions.Player.Attack.IsPressed();
+        
+        if (_isShooting)
+        {
+            // DÃ©clenche l'animation
+            _animator.SetTrigger("attack"); 
+        }
+    }
+
     private void ClampMovement()
     {
         if (_collider == null || _cam == null) return;
 
         Bounds b = _collider.bounds;
-
         float halfW = b.extents.x;
         float halfH = b.extents.y;
 
-        // Fix : on passe la distance Z de la caméra pour que
-        // ViewportToWorldPoint calcule correctement les bords de l'écran
         float camZ = Mathf.Abs(_cam.transform.position.z);
-
         float minX = _cam.ViewportToWorldPoint(new Vector3(0, 0, camZ)).x + halfW;
         float maxX = _cam.ViewportToWorldPoint(new Vector3(1, 0, camZ)).x - halfW;
-
         float minY = _minHeight + halfH;
         float maxY = _maxHeight - halfH;
 
@@ -136,28 +145,27 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _playerLife -= damage;
-        StartCoroutine(FlashRed()); // Clignotement rouge quand le joueur prend des dégâts
+        StartCoroutine(FlashRed());
 
         if (_playerLife <= 0)
             Die();
     }
-    // Clignotement rouge quand le joueur prend des dégâts
+
     private IEnumerator FlashRed()
     {
         _spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.2f);
         _spriteRenderer.color = Color.white;
     }
+
     private void Die()
     {
         _animator.SetTrigger("isDead");
-
         OnPlayerDeath?.Invoke(this, EventArgs.Empty);
 
         if (_inputSystem_Actions != null)
             _inputSystem_Actions.Player.Disable();
 
-        // On attend la fin de l'animation avant de charger la scène
         StartCoroutine(LoadSceneAfterAnimation());
     }
 

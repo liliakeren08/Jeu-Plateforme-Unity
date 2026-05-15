@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class EnemyFireball : MonoBehaviour
 {
     private float _speed = 6f;
@@ -20,7 +21,6 @@ public class EnemyFireball : MonoBehaviour
 
     private void Update()
     {
-        // Détruit hors caméra
         Vector3 viewPos = cam.WorldToViewportPoint(transform.position);
         if (viewPos.x < -0.1f || viewPos.x > 1.1f ||
             viewPos.y < -0.1f || viewPos.y > 1.1f)
@@ -39,5 +39,4 @@ public class EnemyFireball : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }

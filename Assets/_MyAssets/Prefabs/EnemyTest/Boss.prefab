@@ -1164,7 +1164,7 @@ Transform:
   m_GameObject: {fileID: 8786869033574554548}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.173, y: -1.678, z: 0}
+  m_LocalPosition: {x: -4.13, y: -1.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1180,6 +1180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6372801468106957782}
   - component: {fileID: -18838108653170187}
+  - component: {fileID: 853044847359633621}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Enemy
@@ -1223,11 +1224,35 @@ MonoBehaviour:
   _enemySpeed: 2.5
   _knockbackForce: 5
   _knockbackDuration: 0.2
-  _canAttack: 0
   _attackRange: 5
   _fireRateMin: 1
   _fireRateMax: 2
-  _teleportCooldown: 999
-  _teleportRange: 2
   _maxHealth: 6
   _damageOnContact: 5
+--- !u!50 &853044847359633621
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9003545115738624286}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

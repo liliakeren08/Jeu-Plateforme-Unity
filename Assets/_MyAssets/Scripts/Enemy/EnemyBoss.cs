@@ -28,7 +28,7 @@ public class EnemyBoss : MonoBehaviour
     private bool _isKnockback = false;
     private float _knockbackTimer = 0f;
     private bool _isDead = false;
-    private bool _canAttack = false; // Devient true après le délai de 3s
+    private bool _canAttack = false;
     private Transform _player;
     private Rigidbody2D _rb;
     private Animator _animator;
@@ -39,17 +39,29 @@ public class EnemyBoss : MonoBehaviour
         _currentHealth = _maxHealth;
         _rb = GetComponent<Rigidbody2D>();
 
-        // On récupère l'Animator et SpriteRenderer sur l'enfant BossVisual
+        if (_rb == null)
+        {
+            Debug.LogError("Rigidbody2D manquant sur le Boss ! Ajout automatique.");
+            _rb = gameObject.AddComponent<Rigidbody2D>();
+            _rb.gravityScale = 0f;
+            _rb.freezeRotation = true;
+        }
+
         Transform bossVisual = transform.Find("BossVisual");
-        _animator = bossVisual.GetComponent<Animator>();
-        _spriteRenderer = bossVisual.GetComponent<SpriteRenderer>();
+        if (bossVisual != null)
+        {
+            _animator = bossVisual.GetComponent<Animator>();
+            _spriteRenderer = bossVisual.GetComponent<SpriteRenderer>();
+        }
+        else
+        {
+            Debug.LogError("BossVisual introuvable !");
+        }
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
             _player = playerObj.transform;
 
-        // Attend 3s avant de commencer à attaquer
-        // la téléportation est désactivée pour l'instant
         StartCoroutine(AttackAfterDelay());
     }
 
@@ -75,43 +87,57 @@ public class EnemyBoss : MonoBehaviour
 
         if (distanceToPlayer > _attackRange)
         {
-            // Trop loin — il marche vers le joueur
             Vector2 direction = (_player.position - transform.position).normalized;
             _rb.linearVelocity = direction * _enemySpeed;
-            _animator.SetBool("isWalking", true);
         }
         else
         {
-            // Dans la zone de tir — il s'arrête et tire
             _rb.linearVelocity = Vector2.zero;
-            _animator.SetBool("isWalking", false);
         }
+
+        if (_spriteRenderer != null)
+            _spriteRenderer.flipX = _player.position.x <= transform.position.x;
     }
 
     private IEnumerator AttackAfterDelay()
     {
-        // Le boss marche d'abord pendant 3s avant de pouvoir attaquer
         yield return new WaitForSeconds(3f);
         _canAttack = true;
+    }
+
+    // Calcule la position du firepoint en tenant compte
+    // du sens du sprite (gauche/droite)
+    private Vector3 GetFirePointPosition()
+    {
+        if (_firePoint == null)
+            return transform.position;
+
+        bool facingRight = _player.position.x > transform.position.x;
+        Vector3 offset = _firePoint.localPosition;
+
+        if (!facingRight)
+            offset.x = -Mathf.Abs(offset.x);
+        else
+            offset.x = Mathf.Abs(offset.x);
+
+        return transform.position + offset;
     }
 
     private void EnemyAttack()
     {
         if (_enemyAttackPrefab == null) return;
         if (GameManager.Instance == null) return;
+        if (_player == null) return;
         if (Time.time < _canFire) return;
 
-        // Tire seulement si dans la zone d'attaque
         float distanceToPlayer = Vector2.Distance(transform.position, _player.position);
         if (distanceToPlayer > _attackRange) return;
 
-        Vector3 spawnPos = _firePoint != null ? _firePoint.position : transform.position;
-
-        // Tire vers le joueur
+        Vector3 spawnPos = GetFirePointPosition();
         Vector2 direction = (_player.position - spawnPos).normalized;
 
-        // Trigger animation attaque quand il tire
-        _animator.SetTrigger("attack");
+        if (_animator != null)
+            _animator.SetTrigger("attack");
 
         GameObject proj = Instantiate(_enemyAttackPrefab, spawnPos, Quaternion.identity);
         EnemyFireball fireScript = proj.GetComponent<EnemyFireball>();
@@ -126,8 +152,6 @@ public class EnemyBoss : MonoBehaviour
     {
         if (_isDead) return;
         _currentHealth -= amount;
-
-        // Flash rouge quand le Boss prend des dégâts
         StartCoroutine(FlashRed());
 
         if (_currentHealth <= 0f)
@@ -136,17 +160,21 @@ public class EnemyBoss : MonoBehaviour
 
     private IEnumerator FlashRed()
     {
-        _spriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(0.2f);
-        _spriteRenderer.color = Color.white;
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(0.2f);
+            _spriteRenderer.color = Color.white;
+        }
     }
 
     private void Die()
     {
         _isDead = true;
 
-        // Trigger mort — l'animation joue jusqu'au bout
-        _animator.SetTrigger("isDead");
+        if (_animator != null)
+            _animator.SetTrigger("isDead");
+
         _rb.linearVelocity = Vector2.zero;
 
         if (_xpOrbPrefab != null)
@@ -160,10 +188,12 @@ public class EnemyBoss : MonoBehaviour
 
     private IEnumerator DestroyAfterAnimation()
     {
-        // On attend que l'Animator soit sur isDead avant de lire sa durée
         yield return null;
-        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        yield return new WaitForSeconds(stateInfo.length);
+        if (_animator != null)
+        {
+            AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            yield return new WaitForSeconds(stateInfo.length);
+        }
         Destroy(gameObject);
     }
 
