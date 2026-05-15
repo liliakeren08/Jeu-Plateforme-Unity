@@ -55,9 +55,9 @@ public class FireballWeapon : Weapons
             return;
         }
 
-       
 
-        Vector2 baseDir = -player.GetLastDirection().normalized;
+
+        Vector2 baseDir = player.GetLastDirection().normalized; 
 
         Transform firePoint = player.FirePoint;
         Vector3 spawnPos = firePoint != null

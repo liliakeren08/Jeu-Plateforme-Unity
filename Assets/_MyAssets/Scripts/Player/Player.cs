@@ -70,9 +70,9 @@ public class Player : MonoBehaviour
         _animator.SetBool("isWalking", input != Vector2.zero);
 
         if (input.x > 0)
-            _spriteRenderer.flipX = true;
+            _spriteRenderer.flipX = false; // va à droite ? de face
         else if (input.x < 0)
-            _spriteRenderer.flipX = false;
+            _spriteRenderer.flipX = true;  // va à gauche ? retourné
 
         if (input.x != 0)
             _lastDirection = new Vector2(input.x, 0).normalized;
