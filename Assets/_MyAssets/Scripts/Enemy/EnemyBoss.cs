@@ -15,14 +15,9 @@ public class EnemyBoss : MonoBehaviour
     [SerializeField] private float _knockbackDuration = 0.2f;
 
     [Header("Attaque")]
-    [SerializeField] private bool _canAttack = false;
-    [SerializeField] private float _attackRange = 5f; // Distance à laquelle il s'arrête et tire
+    [SerializeField] private float _attackRange = 5f;
     [SerializeField] private float _fireRateMin = 0.5f;
     [SerializeField] private float _fireRateMax = 1f;
-
-    [Header("Téléportation")]
-    [SerializeField] private float _teleportCooldown = 2f;
-    [SerializeField] private float _teleportRange = 2f;
 
     [Header("Santé")]
     [SerializeField] private float _maxHealth = 6f;
@@ -33,6 +28,7 @@ public class EnemyBoss : MonoBehaviour
     private bool _isKnockback = false;
     private float _knockbackTimer = 0f;
     private bool _isDead = false;
+    private bool _canAttack = false; // Devient true après le délai de 3s
     private Transform _player;
     private Rigidbody2D _rb;
     private Animator _animator;
@@ -52,7 +48,8 @@ public class EnemyBoss : MonoBehaviour
         if (playerObj != null)
             _player = playerObj.transform;
 
-        StartCoroutine(TeleportLoop());
+        // Attend 3s avant de commencer à attaquer
+        // la téléportation est désactivée pour l'instant
         StartCoroutine(AttackAfterDelay());
     }
 
@@ -93,7 +90,7 @@ public class EnemyBoss : MonoBehaviour
 
     private IEnumerator AttackAfterDelay()
     {
-        // Attend 3s avant de commencer à tirer
+        // Le boss marche d'abord pendant 3s avant de pouvoir attaquer
         yield return new WaitForSeconds(3f);
         _canAttack = true;
     }
@@ -103,6 +100,10 @@ public class EnemyBoss : MonoBehaviour
         if (_enemyAttackPrefab == null) return;
         if (GameManager.Instance == null) return;
         if (Time.time < _canFire) return;
+
+        // Tire seulement si dans la zone d'attaque
+        float distanceToPlayer = Vector2.Distance(transform.position, _player.position);
+        if (distanceToPlayer > _attackRange) return;
 
         Vector3 spawnPos = _firePoint != null ? _firePoint.position : transform.position;
 
@@ -119,29 +120,6 @@ public class EnemyBoss : MonoBehaviour
 
         float fireRate = UnityEngine.Random.Range(_fireRateMin, _fireRateMax);
         _canFire = Time.time + fireRate;
-    }
-
-    private IEnumerator TeleportLoop()
-    {
-        while (!_isDead)
-        {
-            yield return new WaitForSeconds(_teleportCooldown);
-            EnemyTeleport();
-        }
-    }
-
-    private void EnemyTeleport()
-    {
-        if (_player == null) return;
-
-        _spriteRenderer.enabled = false;
-        _rb.linearVelocity = Vector2.zero;
-
-        float angle = UnityEngine.Random.Range(150f, 210f) * Mathf.Deg2Rad;
-        Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * _teleportRange;
-        transform.position = (Vector2)_player.position + offset;
-
-        _spriteRenderer.enabled = true;
     }
 
     public void TakeDamage(float amount)
