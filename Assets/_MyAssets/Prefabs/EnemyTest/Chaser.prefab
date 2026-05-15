@@ -75,7 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyChaser
   _enemyPoints: 10
   _xpOrbPrefab: {fileID: 2315933310648518095, guid: 33c543fe3faa6bc4cadf752718a37320, type: 3}
-  _enemySpeed: 2
+  _enemySpeed: 1.5
   _knockbackForce: 5
   _knockbackDuration: 0.2
   _maxHealth: 1
