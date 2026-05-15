@@ -18,7 +18,7 @@ public class EnemyTank : MonoBehaviour
     [SerializeField] private float _windUpDuration = 0.8f;
     [SerializeField] private float _dashDuration = 0.25f;
 
-    [Header("Santé")]
+    [Header("Sant")]
     [SerializeField] private float _maxHealth = 3f;
     [SerializeField] private float _damageOnContact = 3f;
 
@@ -38,7 +38,7 @@ public class EnemyTank : MonoBehaviour
         _currentHealth = _maxHealth;
         _rb = GetComponent<Rigidbody2D>();
 
-        // On récupère l'Animator et le SpriteRenderer sur l'enfant TankVisual
+        // On rcupre l'Animator et le SpriteRenderer sur l'enfant TankVisual
         Transform tankVisual = transform.Find("TankVisual");
         _animator = tankVisual.GetComponent<Animator>();
         _spriteRenderer = tankVisual.GetComponent<SpriteRenderer>();
@@ -67,13 +67,13 @@ public class EnemyTank : MonoBehaviour
         Vector2 direction = (_player.position - transform.position).normalized;
         _rb.linearVelocity = direction * _enemySpeed;
 
-        // Active l'animation de marche quand il se déplace vers le joueur
+        // Active l'animation de marche quand il se dplace vers le joueur
         _animator.SetBool("isWalking", true);
     }
 
     private IEnumerator DashLoop()
     {
-        // La boucle s'arrête dès que le Tank est mort
+        // La boucle s'arrte ds que le Tank est mort
         while (!_isDead)
         {
             yield return new WaitForSeconds(_dashCooldown);
@@ -84,13 +84,13 @@ public class EnemyTank : MonoBehaviour
 
     private IEnumerator DashSequence()
     {
-        // Sécurité : on ne dash pas si mort
+        // Scurit : on ne dash pas si mort
         if (_isDead) yield break;
 
         _isWindingUp = true;
         _rb.linearVelocity = Vector2.zero;
 
-        // Wind-up : arrêt de marche + trigger attaque
+        // Wind-up : arrt de marche + trigger attaque
         _animator.SetBool("isWalking", false);
         _animator.SetTrigger("attack");
 
@@ -120,7 +120,7 @@ public class EnemyTank : MonoBehaviour
         if (_isDead) return;
         _currentHealth -= damage;
 
-        // Clignotement rouge quand le Tank prend des dégâts
+        // Clignotement rouge quand le Tank prend des dgts
         StartCoroutine(FlashRed());
 
         if (_currentHealth <= 0f)
@@ -138,7 +138,7 @@ public class EnemyTank : MonoBehaviour
     {
         _isDead = true;
 
-        // Trigger mort — l'animation joue jusqu'au bout
+        // Trigger mort  l'animation joue jusqu'au bout
         _animator.SetTrigger("isDead");
         _rb.linearVelocity = Vector2.zero;
 
@@ -153,7 +153,7 @@ public class EnemyTank : MonoBehaviour
 
     private IEnumerator DestroyAfterAnimation()
     {
-        // On attend que l'Animator soit bien sur l'état isDead avant de lire sa durée
+        // On attend que l'Animator soit bien sur l'tat isDead avant de lire sa dure
         yield return null;
         AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         yield return new WaitForSeconds(stateInfo.length);
@@ -163,6 +163,11 @@ public class EnemyTank : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_isDead) return;
+        // On ignore les zones utilitaires du joueur (MagnetZone, PickUpZone)
+        // pour ne dÃ©clencher des dÃ©gÃ¢ts que sur le vrai corps du joueur
+        if (collision.GetComponent<MagnetZone>() != null) return;
+        if (collision.name == "PickUpZone") return;
+
 
         if (collision.CompareTag("Enemy") || collision.CompareTag("EnemyAttack")
             || collision.CompareTag("Xp") || collision.CompareTag("Power")) return;
@@ -173,9 +178,11 @@ public class EnemyTank : MonoBehaviour
             TakeDamage(1f);
         }
 
-        if (collision.CompareTag("Player"))
+        if (collision.GetComponentInParent<Player>() != null)
         {
-            Player playerScript = collision.GetComponent<Player>();
+            // GetComponentInParent : le script Player est sur le parent (ex: Player_Fireball)
+            // mais le PolygonCollider2D peut etre sur l'enfant (PlayerVisual). On remonte donc la hierarchie.
+            Player playerScript = collision.GetComponentInParent<Player>();
             if (playerScript != null)
                 playerScript.TakeDamage(_damageOnContact);
 

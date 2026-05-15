@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
         _inputSystem_Actions = new InputSystem_Actions();
         _inputSystem_Actions.Player.Enable();
 
-        _collider = GetComponent<PolygonCollider2D>();
+        _collider = GetComponentInChildren<PolygonCollider2D>();
         _cam = Camera.main;
     }
 
@@ -113,22 +113,20 @@ public class Player : MonoBehaviour
         _isShooting = _inputSystem_Actions.Player.Attack.IsPressed();
     }
 
-    /// <summary>
-    /// Empêche le joueur de sortir des limites de la caméra.
+        /// <summary>
+    /// Empêche le joueur de sortir du cadre de la caméra.
     /// </summary>
     private void ClampMovement()
     {
-        if (_collider == null || _cam == null) return;
-
-        Bounds b = _collider.bounds;
-        float halfW = b.extents.x;
-        float halfH = b.extents.y;
+        if (_cam == null) return;
 
         float camZ = Mathf.Abs(_cam.transform.position.z);
-        float minX = _cam.ViewportToWorldPoint(new Vector3(0, 0, camZ)).x + halfW;
-        float maxX = _cam.ViewportToWorldPoint(new Vector3(1, 0, camZ)).x - halfW;
-        float minY = _minHeight + halfH;
-        float maxY = _maxHeight - halfH;
+
+        // Calcule les 4 bords exacts du cadre de la caméra en coordonnées monde
+        float minX = _cam.ViewportToWorldPoint(new Vector3(0, 0, camZ)).x;
+        float maxX = _cam.ViewportToWorldPoint(new Vector3(1, 0, camZ)).x;
+        float minY = _cam.ViewportToWorldPoint(new Vector3(0, 0, camZ)).y;
+        float maxY = _cam.ViewportToWorldPoint(new Vector3(0, 1, camZ)).y;
 
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, minX, maxX);

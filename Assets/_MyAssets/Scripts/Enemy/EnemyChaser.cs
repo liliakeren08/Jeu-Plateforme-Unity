@@ -12,7 +12,7 @@ public class EnemyChaser : MonoBehaviour
     [SerializeField] private float _knockbackForce = 5f;
     [SerializeField] private float _knockbackDuration = 0.2f;
 
-    [Header("Santé")]
+    [Header("Sant")]
     [SerializeField] private float _maxHealth = 1f;
     [SerializeField] private float _damageOnContact = 1f;
 
@@ -30,7 +30,7 @@ public class EnemyChaser : MonoBehaviour
         _currentHealth = _maxHealth;
         _rb = GetComponent<Rigidbody2D>();
 
-        // On récupère l'Animator et SpriteRenderer sur l'enfant ChaserVisual
+        // On rcupre l'Animator et SpriteRenderer sur l'enfant ChaserVisual
         Transform chaserVisual = transform.Find("ChaserVisual");
         _animator = chaserVisual.GetComponent<Animator>();
         _spriteRenderer = chaserVisual.GetComponent<SpriteRenderer>();
@@ -38,7 +38,7 @@ public class EnemyChaser : MonoBehaviour
         if (playerObj != null)
             _player = playerObj.transform;
 
-        // Démarre directement en mode walking dès l'apparition
+        // Dmarre directement en mode walking ds l'apparition
         _animator.SetBool("isWalking", true);
     }
 
@@ -73,7 +73,7 @@ public class EnemyChaser : MonoBehaviour
         if (_isDead) return;
         _currentHealth -= amount;
 
-        // Flash rouge quand il prend des dégâts
+        // Flash rouge quand il prend des dgts
         StartCoroutine(FlashRed());
 
         if (_currentHealth <= 0f)
@@ -92,7 +92,7 @@ public class EnemyChaser : MonoBehaviour
         _isDead = true;
         _rb.linearVelocity = Vector2.zero;
 
-        // Trigger mort — l'animation joue jusqu'au bout
+        // Trigger mort  l'animation joue jusqu'au bout
         _animator.SetTrigger("isDead");
 
         if (_xpOrbPrefab != null)
@@ -106,7 +106,7 @@ public class EnemyChaser : MonoBehaviour
 
     private IEnumerator DestroyAfterAnimation()
     {
-        // On attend que l'Animator soit sur isDead avant de lire sa durée
+        // On attend que l'Animator soit sur isDead avant de lire sa dure
         yield return null;
         AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         yield return new WaitForSeconds(stateInfo.length);
@@ -116,6 +116,11 @@ public class EnemyChaser : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_isDead) return;
+        // On ignore les zones utilitaires du joueur (MagnetZone, PickUpZone)
+        // pour ne dÃ©clencher des dÃ©gÃ¢ts que sur le vrai corps du joueur
+        if (collision.GetComponent<MagnetZone>() != null) return;
+        if (collision.name == "PickUpZone") return;
+
 
         if (collision.CompareTag("Enemy") || collision.CompareTag("EnemyAttack")
             || collision.CompareTag("Xp") || collision.CompareTag("Power")) return;
@@ -126,9 +131,11 @@ public class EnemyChaser : MonoBehaviour
             TakeDamage(1f);
         }
 
-        if (collision.CompareTag("Player"))
+        if (collision.GetComponentInParent<Player>() != null)
         {
-            Player playerScript = collision.GetComponent<Player>();
+            // GetComponentInParent : le script Player est sur le parent (ex: Player_Fireball)
+            // mais le PolygonCollider2D peut etre sur l'enfant (PlayerVisual). On remonte donc la hierarchie.
+            Player playerScript = collision.GetComponentInParent<Player>();
             if (playerScript != null)
                 playerScript.TakeDamage(_damageOnContact);
 

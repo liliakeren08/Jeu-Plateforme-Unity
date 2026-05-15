@@ -19,7 +19,7 @@ public class EnemyBoss : MonoBehaviour
     [SerializeField] private float _fireRateMin = 0.5f;
     [SerializeField] private float _fireRateMax = 1f;
 
-    [Header("Sant�")]
+    [Header("Sante")]
     [SerializeField] private float _maxHealth = 6f;
     [SerializeField] private float _damageOnContact = 5f;
 
@@ -87,8 +87,8 @@ public class EnemyBoss : MonoBehaviour
 
         if (distanceToPlayer > _attackRange)
         {
-            Vector2 direction = (_player.position - transform.position).normalized;
-            _rb.linearVelocity = direction * _enemySpeed;
+            Vector2 dir = (_player.position - transform.position).normalized;
+            _rb.linearVelocity = dir * _enemySpeed;
         }
         else
         {
@@ -105,22 +105,9 @@ public class EnemyBoss : MonoBehaviour
         _canAttack = true;
     }
 
-    // Calcule la position du firepoint en tenant compte
-    // du sens du sprite (gauche/droite)
     private Vector3 GetFirePointPosition()
     {
-        if (_firePoint == null)
-            return transform.position;
-
-        bool facingRight = _player.position.x > transform.position.x;
-        Vector3 offset = _firePoint.localPosition;
-
-        if (!facingRight)
-            offset.x = -Mathf.Abs(offset.x);
-        else
-            offset.x = Mathf.Abs(offset.x);
-
-        return transform.position + offset;
+        return _firePoint != null ? _firePoint.position : transform.position;
     }
 
     private void EnemyAttack()
@@ -133,19 +120,32 @@ public class EnemyBoss : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, _player.position);
         if (distanceToPlayer > _attackRange) return;
 
-        Vector3 spawnPos = GetFirePointPosition();
-        Vector2 direction = (_player.position - spawnPos).normalized;
-
+        // On declenche l'animation
         if (_animator != null)
             _animator.SetTrigger("attack");
+
+        // On capture LA POSITION DE SPAWN et LA DIRECTION vers le joueur MAINTENANT
+        // Comme ca le tir est parfaitement vise meme apres le delai de l'animation
+        Vector3 spawnPos = GetFirePointPosition();
+        Vector2 directionToPlayer = ((Vector2)_player.position - (Vector2)spawnPos).normalized;
+        StartCoroutine(SpawnFireballWithDelay(spawnPos, directionToPlayer));
+
+        float fireRate = UnityEngine.Random.Range(_fireRateMin, _fireRateMax);
+        _canFire = Time.time + fireRate;
+    }
+
+    // spawnPos et direction sont captures au moment du tir pour garantir la precision
+    private IEnumerator SpawnFireballWithDelay(Vector3 spawnPos, Vector2 direction)
+    {
+        // Petit delai pour que l'animation d'attaque du boss commence avant le tir
+        yield return new WaitForSeconds(0.4f);
+
+        if (_isDead) yield break;
 
         GameObject proj = Instantiate(_enemyAttackPrefab, spawnPos, Quaternion.identity);
         EnemyFireball fireScript = proj.GetComponent<EnemyFireball>();
         if (fireScript != null)
             fireScript.Init(8f, direction);
-
-        float fireRate = UnityEngine.Random.Range(_fireRateMin, _fireRateMax);
-        _canFire = Time.time + fireRate;
     }
 
     public void TakeDamage(float amount)
@@ -200,6 +200,11 @@ public class EnemyBoss : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_isDead) return;
+        // On ignore les zones utilitaires du joueur (MagnetZone, PickUpZone)
+        // pour ne déclencher des dégâts que sur le vrai corps du joueur
+        if (collision.GetComponent<MagnetZone>() != null) return;
+        if (collision.name == "PickUpZone") return;
+
 
         if (collision.CompareTag("Enemy") || collision.CompareTag("EnemyAttack")
             || collision.CompareTag("Xp") || collision.CompareTag("Power")) return;
@@ -210,9 +215,11 @@ public class EnemyBoss : MonoBehaviour
             TakeDamage(1f);
         }
 
-        if (collision.CompareTag("Player"))
+        if (collision.GetComponentInParent<Player>() != null)
         {
-            Player playerScript = collision.GetComponent<Player>();
+            // GetComponentInParent : le script Player est sur le parent (ex: Player_Fireball)
+            // mais le PolygonCollider2D peut etre sur l'enfant (PlayerVisual). On remonte donc la hierarchie.
+            Player playerScript = collision.GetComponentInParent<Player>();
             if (playerScript != null)
                 playerScript.TakeDamage(_damageOnContact);
 
