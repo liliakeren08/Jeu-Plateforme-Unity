@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,13 +19,13 @@ public class GetNewHighScore : MonoBehaviour
 
     private void Start()
     {
-        _btSaveName.onClick.AddListener(EnregistrerNom); // Ajoute un listener pour le bouton enregistrer qui appelle la méthode EnregistrerNom
-        _uiEnd = FindAnyObjectByType<UIEnd>(); // Trouve une instance de la classe UIEnd dans la scène pour accéder à ses méthodes
+        _btSaveName.onClick.AddListener(EnregistrerNom); // Ajoute un listener pour le bouton enregistrer qui appelle la mÃ©thode EnregistrerNom
+        _uiEnd = FindAnyObjectByType<UIEnd>(); // Trouve une instance de la classe UIEnd dans la scÃ¨ne pour accÃ©der Ã  ses mÃ©thodes
 
-        StartCoroutine(CloseGetHighScorePanelDelay());  // Démarre la coroutine pour fermer le panneau de saisie après un délai
+        StartCoroutine(CloseGetHighScorePanelDelay());  // DÃ©marre la coroutine pour fermer le panneau de saisie aprÃ¨s un dÃ©lai
     }
 
-    // Coroutine pour fermer le panneau de saisie après un délai
+    // Coroutine pour fermer le panneau de saisie aprÃ¨s un dÃ©lai
     IEnumerator CloseGetHighScorePanelDelay()
     {
         yield return new WaitForSeconds(60f); // Attendre 60 secondes
@@ -35,23 +35,23 @@ public class GetNewHighScore : MonoBehaviour
         }
     }
 
-    // Méthode appeler quand une lettre est saisie (bouton) et modifie le champ texte
+    // MÃ©thode appeler quand une lettre est saisie (bouton) et modifie le champ texte
     public void AddLetter(string p_letter)
     {
         // s'assure que le panneau de saisie est actif
         if (_getNewHighScporePanel.activeSelf)
         {
-            // Gère le caractère d'espacement
+            // GÃ¨re le caractÃ¨re d'espacement
             if (p_letter == "Espace")
             {
                 _tempText += " ";
             }
-            // Gère la touche pour effacer le dernier caractère
-            else if (p_letter == "←" && _tempText.Length > 0)
+            // GÃ¨re la touche pour effacer le dernier caractÃ¨re
+            else if (p_letter == "â†" && _tempText.Length > 0)
             {
                 _tempText = _tempText.Remove(_tempText.Length - 1);
             }
-            // Si le texte n'a pas dépasser la limite de longueur (3) on ajoute la lettre
+            // Si le texte n'a pas dÃ©passer la limite de longueur (3) on ajoute la lettre
             else
             {
                 if (_tempText.Length < _maxNameLength)
@@ -59,36 +59,36 @@ public class GetNewHighScore : MonoBehaviour
                     _tempText += p_letter;
                 }
             }
-            //Mets à jour le champ texte
+            //Mets Ã  jour le champ texte
             _txtName.text = _tempText;
         }
     }
 
-        // Méthode appelé quand on appuie sur le bouton enregistrer pour sauvegardé la nouvelle entrée
+        // MÃ©thode appelÃ© quand on appuie sur le bouton enregistrer pour sauvegardÃ© la nouvelle entrÃ©e
     private void EnregistrerNom()
     {
-        //Valide le nom entrée
+        //Valide le nom entrÃ©e
         bool validName = false;
         string nameInput = _txtName.text;
-        // Vérifie que le nom entrée n'est pas vide !
+        // VÃ©rifie que le nom entrÃ©e n'est pas vide !
         foreach (char c in nameInput)
         {
-            if (c != ' ') // Si le nom contient au moins un caractère différent d'un espace, il est considéré comme valide
+            if (c != ' ') // Si le nom contient au moins un caractÃ¨re diffÃ©rent d'un espace, il est considÃ©rÃ© comme valide
             {
                 validName = true;
             }
         }
 
-        if (!string.IsNullOrEmpty(nameInput) && validName) // Si le nom n'est pas vide et contient au moins un caractère différent d'un espace, il est considéré comme valide
+        if (!string.IsNullOrEmpty(nameInput) && validName) // Si le nom n'est pas vide et contient au moins un caractÃ¨re diffÃ©rent d'un espace, il est considÃ©rÃ© comme valide
         {
-            HighScoreTable highScoreTable = FindAnyObjectByType<HighScoreTable>(); // Trouve une instance de la classe HighScoreTable dans la scène
-            //Appelle la méthode pour ajouté le score et le nom à la liste
+            HighScoreTable highScoreTable = FindAnyObjectByType<HighScoreTable>(); // Trouve une instance de la classe HighScoreTable dans la scÃ¨ne
+            //Appelle la mÃ©thode pour ajoutÃ© le score et le nom Ã  la liste
             highScoreTable.AddHighScoreEntry(_uiEnd.Score, nameInput);
             
             // Affiche la nouvelle table
             highScoreTable.DisplayHighScoreTable();
 
-            // Retourne sur l'écran de retour
+            // Retourne sur l'Ã©cran de retour
             _getNewHighScporePanel.SetActive(false);
             _endPanel.SetActive(true);
             EventSystem.current.SetSelectedGameObject(null);
@@ -105,7 +105,7 @@ public class GetNewHighScore : MonoBehaviour
 
     public void OnCancelClick()
     {
-        // Retourne sur l'écran de retour
+        // Retourne sur l'Ã©cran de retour
         _getNewHighScporePanel.SetActive(false);
         _endPanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);

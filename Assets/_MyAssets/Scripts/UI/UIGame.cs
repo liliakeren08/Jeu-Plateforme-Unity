@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -16,7 +17,10 @@ public class UIGame :  UI
     [SerializeField] private Image _fillImage;
     [SerializeField] private Gradient _healthGradient;
 
-    // Instance statique pour y accéder facilement depuis le script Player
+    [Header("Configuration Aide Sourdine")]
+    [SerializeField] private GameObject _muteInstructionText;
+
+    // Instance statique pour y accÃ©der facilement depuis le script Player
     public static UIGame Instance;
 
     private void Awake()
@@ -27,10 +31,49 @@ public class UIGame :  UI
     private void Start()
     {
         UpdateScoreDisplay();
-        // Initialisation de la couleur du dégradé au démarrage (Pleine vie = Vert)
+        // Initialisation de la couleur du dÃ©gradÃ© au dÃ©marrage (Pleine vie = Vert)
         _fillImage.color = _healthGradient.Evaluate(1f);
+
+        // Recherche automatique intelligente si le slot de l'inspecteur est vide
+        if (_muteInstructionText == null)
+        {
+            TextMeshProUGUI[] allTexts = FindObjectsByType<TextMeshProUGUI>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (var txt in allTexts)
+            {
+                if (txt.text.Contains("M OU 6") || 
+                    txt.text.Contains("MUSIC") || 
+                    txt.text.Contains("sourdine") || 
+                    txt.text.Contains("SOURDINE") || 
+                    txt.text.Contains("Mute") || 
+                    txt.text.Contains("MUTE"))
+                {
+                    _muteInstructionText = txt.gameObject;
+                    Debug.Log($"[UIGame] Texte de sourdine trouvé automatiquement : '{txt.text}' !");
+                    break;
+                }
+            }
+        }
+
+        // Masquer l'aide de la sourdine après 10 secondes de jeu
+        if (_muteInstructionText != null)
+        {
+            StartCoroutine(HideMuteInstructionAfterDelay());
+        }
+        else
+        {
+            Debug.LogWarning("[UIGame] Impossible de trouver le texte d'explication de la sourdine. Pensez à le lier dans l'inspecteur si son texte est différent !");
+        }
     }
     
+    private IEnumerator HideMuteInstructionAfterDelay()
+    {
+        yield return new WaitForSeconds(10f);
+        if (_muteInstructionText != null)
+        {
+            _muteInstructionText.SetActive(false);
+            Debug.Log("[UIGame] Texte de sourdine masqué après 10 secondes !");
+        }
+    }
 
     private void Update()
     {
@@ -42,19 +85,19 @@ public class UIGame :  UI
     // --- LOGIQUE DU SCORE ---
     public void UpdateScoreDisplay()
     {
-        // On récupère le score via le Singleton du GameManager
+        // On rÃ©cupÃ¨re le score via le Singleton du GameManager
         int currentScore = GameManager.Instance.PlayerScore;
         _scoreText.text = $"{currentScore}";
     }
- // --- LOGIQUE DE LA VIE (Appelée par le script Player) ---
+ // --- LOGIQUE DE LA VIE (AppelÃ©e par le script Player) ---
     public void UpdateHealthBar(float currentHealth, float maxHealth)
     {
         float healthPercentage = currentHealth / maxHealth;
 
-        // Met à jour la position de la barre
+        // Met Ã  jour la position de la barre
         _healthSlider.value = healthPercentage;
 
-        // Met à jour la couleur selon le dégradé (Vert -> Jaune -> Rouge)
+        // Met Ã  jour la couleur selon le dÃ©gradÃ© (Vert -> Jaune -> Rouge)
         _fillImage.color = _healthGradient.Evaluate(healthPercentage);
     }
 

@@ -22,34 +22,40 @@ public class UIEnd : UI
 
     private void Start()
     {
-        _highScoresTable = FindAnyObjectByType<HighScoreTable>(); // Trouve une instance de la classe HighScoreTable dans la scène pour accéder à la liste des scores élevés
-        var highScoresEntryList = _highScoresTable.GetHighScoreEntries();  // Récupère la liste des entrées de score élevé à partir de la classe HighScoreTable
+        _highScoresTable = FindAnyObjectByType<HighScoreTable>(); // Trouve une instance de la classe HighScoreTable dans la scÃ¨ne pour accÃ©der Ã  la liste des scores Ã©levÃ©s
+        var highScoresEntryList = _highScoresTable.GetHighScoreEntries();  // RÃ©cupÃ¨re la liste des entrÃ©es de score Ã©levÃ© Ã  partir de la classe HighScoreTable
 
-        // Récupération du score du joueur à partir des PlayerPrefs, avec une valeur par défaut de 0    
+        // RÃ©cupÃ©ration du score du joueur Ã  partir des PlayerPrefs, avec une valeur par dÃ©faut de 0    
         _score = PlayerPrefs.GetInt("PlayerScore", 0);
-        _txtScore.text = $"Pointage final: {_score}"; // Mise à jour du texte du score
+        _txtScore.text = $"Pointage final: {_score}"; // Mise Ã  jour du texte du score
 
         //Lance le clignotement du message fin de partie
         GameOverSequence();
 
-        //Vérifier si la table est pleine avec au moins 10 pointages sauvegardé
-        if (highScoresEntryList.Count >= 10)
+        // Vérifier si la table est pleine avec au moins 10 pointages sauvegardés
+        if (highScoresEntryList != null && highScoresEntryList.Count >= 10)
         {
-            // Vérifie si le score du joueur est supérieur au score le plus bas de la table des scores élevés
-            if (_score > highScoresEntryList[highScoresEntryList.Count - 1].score) { 
+            // On trie la liste par ordre décroissant pour être certain de l'ordre des scores
+            highScoresEntryList.Sort((a, b) => b.score.CompareTo(a.score));
+
+            // Si le joueur égalise ou dépasse le 10e score (index 9), il se qualifie dans le Top 10 !
+            int scoreABattre = highScoresEntryList[9].score;
+
+            if (_score >= scoreABattre) 
+            { 
                 _endPanel.SetActive(false);
                 _getNewHighScorePanel.SetActive(true);
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(_firstLetterEnterName.gameObject);
             }
-            // Si le score du joueur n'est pas supérieur au score le plus bas de la table des scores élevés, affiche le panel de fin de partie avec les options
+            // Si le score ne qualifie pas le joueur dans le Top 10, on va directement à l'écran de fin
             else
             {
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(_menuButton.gameObject);
             }
         }
-        // Si la table des scores élevés n'est pas encore pleine, affiche directement le panel de saisie du nouveau score élevé       
+        // Si la table des scores n'est pas encore pleine, on se qualifie d'office !
         else
         {
             _endPanel.SetActive(false);
@@ -59,7 +65,7 @@ public class UIEnd : UI
         }
     }
 
-    // Méthode qui affiche le texte fin de partie et le fais clignoter avec la coroutine
+    // MÃ©thode qui affiche le texte fin de partie et le fais clignoter avec la coroutine
     private void GameOverSequence()
     {
         _txtGameOver.gameObject.SetActive(true);
@@ -89,6 +95,6 @@ public class UIEnd : UI
 
     public void OnMenuClick()
     {
-        SceneManager.LoadScene(0); // Charge la scène de menu principal (index 0)
+        SceneManager.LoadScene(0); // Charge la scÃ¨ne de menu principal (index 0)
     }
 }

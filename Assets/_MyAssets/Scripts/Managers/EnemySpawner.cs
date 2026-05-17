@@ -50,14 +50,11 @@ public class EnemySpawner : MonoBehaviour
     private float GetSpawnInterval()
     {
         float interval;
-        if (elapsed < 20f) interval = 6.0f;      // Début très calme pour s'équiper
-        else if (elapsed < 45f) interval = 5.0f;
-        else if (elapsed < 75f) interval = 4.0f;
-        else if (elapsed < 120f) interval = 3.5f;
-        else if (elapsed < 180f) interval = 3.0f;
-        else if (elapsed < 210f) interval = 2.5f;
-        else if (elapsed < 260f) interval = 2.0f;
-        else interval = 1.5f;                    // Fin de partie dynamique mais faisable
+        if (elapsed < 25f) interval = 4.5f;      // Début immédiatement actif et engageant
+        else if (elapsed < 60f) interval = 4.0f;  // Période intermédiaire agréable
+        else if (elapsed < 120f) interval = 3.5f; // Légère montée d'adrénaline
+        else if (elapsed < 180f) interval = 3.0f; // Progression finale stabilisée et saine
+        else interval = 2.2f;                    // Reste dynamique sans jamais saturer l'arène de jeu
 
         // Si le boss est actif, on ralentit drastiquement l'apparition des autres ennemis (x3)
         // pour laisser la vedette au combat de boss et éviter d'étouffer le joueur !
@@ -92,21 +89,27 @@ public class EnemySpawner : MonoBehaviour
 
     private GameObject ChooseEnemyType()
     {
+        // Si le boss est actif, on ne fait apparaître QUE des Chasers (fantômes légers et rapides)
+        // pour que le joueur puisse se concentrer à 100% sur l'esquive des tirs du boss sans être bloqué par des sacs à PV !
+        if (IsBossActive())
+        {
+            return chaserPrefab;
+        }
+
         if (elapsed < 20f)
             return chaserPrefab;
 
         if (elapsed < 60f)
         {
             float roll = Random.value;
-            if (roll < 0.7f) return chaserPrefab;
-            return tankPrefab;
+            if (roll < 0.85f) return chaserPrefab; // 85% Chasers (ennemis légers)
+            return tankPrefab;                     // 15% Tanks (ennemis lourds rares)
         }
 
-        // Après 1 minute — uniquement les ennemis normaux (Chaser et Tank).
-        // Le Boss ne doit apparaître QUE via son timer dédié (firstBossTime) pour rester unique et mémorable !
+        // Après 1 minute
         float r = Random.value;
-        if (r < 0.60f) return chaserPrefab;
-        return tankPrefab;
+        if (r < 0.80f) return chaserPrefab;       // 80% Chasers
+        return tankPrefab;                        // 20% Tanks (excellent ratio d'action !)
     }
 
     private Vector2 GetPerimeterSpawnPoint()

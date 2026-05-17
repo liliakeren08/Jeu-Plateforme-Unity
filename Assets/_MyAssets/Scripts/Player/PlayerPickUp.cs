@@ -23,17 +23,16 @@ public class PlayerPickUp : MonoBehaviour
         {
             XPOrb orb = other.GetComponent<XPOrb>();
 
-            if (orb != null)
+            if (orb != null && !orb.IsCollected)
             {
-                _player.AddXP(orb.Value);
-            }
+                // On déclenche la collecte sécurisée de l'orbe
+                orb.Collect();
 
-            if (_pickupSound != null)
-            {
-                AudioSource.PlayClipAtPoint(_pickupSound, Camera.main != null ? Camera.main.transform.position : transform.position);
+                if (_pickupSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(_pickupSound, Camera.main != null ? Camera.main.transform.position : transform.position);
+                }
             }
-
-            Destroy(other.gameObject);
         }
 
         if (other.CompareTag("Power"))

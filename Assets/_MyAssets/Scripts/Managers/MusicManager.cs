@@ -11,9 +11,9 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private AudioClip _clipMusic;
 
     [Header("UI Configuration")]
-    [SerializeField] private Image _muteImageDisplay; 
-    [SerializeField] private Sprite _soundOnSprite;   
-    [SerializeField] private Sprite _soundOffSprite; 
+    [SerializeField] private Image _muteImageDisplay;
+    [SerializeField] private Sprite _soundOnSprite;
+    [SerializeField] private Sprite _soundOffSprite;
 
     private InputSystem_Actions _inputSystem_Actions;
     private AudioSource _audioSource;
@@ -57,6 +57,39 @@ public class MusicManager : MonoBehaviour
         if (_audioSource != null && !_audioSource.isPlaying && !_isMuted)
         {
             _audioSource.Play();
+        }
+
+        bool mutePressed = false;
+
+        // 1. Détection via le Nouveau Système d'Input (si disponible)
+        if (Keyboard.current != null)
+        {
+            if (Keyboard.current.mKey.wasPressedThisFrame ||
+                Keyboard.current.digit6Key.wasPressedThisFrame ||
+                Keyboard.current.numpad6Key.wasPressedThisFrame)
+            {
+                mutePressed = true;
+            }
+        }
+
+        // 2. Détection via le Système d'Input Classique (très fiable au clavier dans l'Éditeur)
+        try
+        {
+            if (Input.GetKeyDown(KeyCode.M) ||
+                Input.GetKeyDown(KeyCode.Alpha6) ||
+                Input.GetKeyDown(KeyCode.Keypad6))
+            {
+                mutePressed = true;
+            }
+        }
+        catch (System.Exception)
+        {
+            // Ignore si l'ancien système est complètement désactivé dans les Player Settings
+        }
+
+        if (mutePressed)
+        {
+            OnMuteClick();
         }
     }
 
@@ -122,6 +155,8 @@ public class MusicManager : MonoBehaviour
         // On change l'image
         UpdateVisuals();
     }
+
+
 
     private void UpdateVisuals()
     {

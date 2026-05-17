@@ -59,17 +59,17 @@ public class LaserWeapon : Weapons
     {
         if (player == null)
         {
-            Debug.LogWarning("Player non assigneé ");
+            Debug.LogWarning("Player non assigneÃ© ");
             return;
         }
 
-        // Joue le son de tir s'il est assigné
+        // Joue le son de tir s'il est assignÃ©
         if (_shootSound != null)
         {
             AudioSource.PlayClipAtPoint(_shootSound, Camera.main != null ? Camera.main.transform.position : transform.position);
         }
 
-        // Atténue la musique pour faire ressortir le son du tir
+        // AttÃ©nue la musique pour faire ressortir le son du tir
         if (MusicManager.Instance != null)
         {
             MusicManager.Instance.DuckMusic(0.5f, 0.2f);
@@ -109,17 +109,17 @@ public class LaserWeapon : Weapons
         switch (level)
         {
             case 2:
-                _cooldown -= 0.5f;
+                _cooldown = Mathf.Max(0.08f, _cooldown - 0.25f);
                 break;
 
             case 3:
                 _speed += 5f;
-                _cooldown -= 0.1f;
+                _cooldown = Mathf.Max(0.08f, _cooldown - 0.1f);
                 _projectileCount = 2;
                 break;
 
             case 4:
-                _cooldown -= 0.3f;
+                _cooldown = Mathf.Max(0.08f, _cooldown - 0.15f);
                 _speed += 2f;
                 break;
 
@@ -131,7 +131,7 @@ public class LaserWeapon : Weapons
                 break;
             case 7:
                 _sizeMultiplier += 0.2f;
-                _cooldown -= 0.3f;
+                _cooldown = Mathf.Max(0.08f, _cooldown - 0.1f);
                 _speed += 2f;
                 break;
             case 8:

@@ -10,7 +10,7 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float _playerSpeed = 5f;
+    [SerializeField] private float _playerSpeed = 6.0f; // Vitesse de base augmentée à 6.0 pour une meilleure réactivité
     [SerializeField] private float _maxHeight = 10f;
     [SerializeField] private float _minHeight = -10f;
 
@@ -131,8 +131,8 @@ public class Player : MonoBehaviour
         _isShooting = _inputSystem_Actions.Player.Attack.IsPressed();
     }
 
-        /// <summary>
-    /// Empêche le joueur de sortir du cadre de la caméra.
+    /// <summary>
+    /// Empêche le joueur de sortir du cadre de la caméra et de dépasser sous la barre d'UI du haut.
     /// </summary>
     private void ClampMovement()
     {
@@ -140,15 +140,21 @@ public class Player : MonoBehaviour
 
         float camZ = Mathf.Abs(_cam.transform.position.z);
 
-        // Calcule les 4 bords exacts du cadre de la caméra en coordonnées monde
+        // Calcule les 4 bords du cadre de la caméra en coordonnées monde
         float minX = _cam.ViewportToWorldPoint(new Vector3(0, 0, camZ)).x;
         float maxX = _cam.ViewportToWorldPoint(new Vector3(1, 0, camZ)).x;
         float minY = _cam.ViewportToWorldPoint(new Vector3(0, 0, camZ)).y;
-        float maxY = _cam.ViewportToWorldPoint(new Vector3(0, 1, camZ)).y;
+        
+        // Bloque le joueur sous la barre d'UI du haut (qui occupe le haut de l'écran, soit environ 85% de la hauteur disponible)
+        float maxY = _cam.ViewportToWorldPoint(new Vector3(0, 0.85f, camZ)).y;
+
+        // Marges de décalage (rayon du joueur) pour éviter qu'il dépasse à moitié de l'écran sur les côtés
+        float marginX = 0.5f;
+        float marginY = 0.5f;
 
         Vector3 pos = transform.position;
-        pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        pos.x = Mathf.Clamp(pos.x, minX + marginX, maxX - marginX);
+        pos.y = Mathf.Clamp(pos.y, minY + marginY, maxY - marginY);
         transform.position = pos;
     }
 
@@ -161,6 +167,7 @@ public class Player : MonoBehaviour
         if (_PlayerCurentXp >= _PlayerXpCap)
         {
             _PlayerCurentLvl++;
+            _playerSpeed += 0.35f; // Augmente dynamiquement la vitesse du joueur pour suivre le rythme des ennemis !
             _PlayerXpCap += 5f; // On rend le prochain niveau plus long à atteindre
             _PlayerCurentXp = 0f;
 
