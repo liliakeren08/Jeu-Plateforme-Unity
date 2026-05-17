@@ -31,12 +31,14 @@ public class EnemySpawner : MonoBehaviour
         {
             elapsed = Time.timeSinceLevelLoad;
 
+            int enemyCount = GetEnemyCount();
             float interval = GetSpawnInterval();
 
-            
-            SpawnEnemy();
+            for (int i = 0; i < enemyCount; i++)
+            {
+                SpawnEnemy();
+            }
 
-            
             if (elapsed >= nextBossTime)
             {
                 SpawnBoss();
@@ -49,26 +51,33 @@ public class EnemySpawner : MonoBehaviour
 
     private float GetSpawnInterval()
     {
-        float interval;
-        if (elapsed < 25f) interval = 4.5f;      // Début immédiatement actif et engageant
-        else if (elapsed < 60f) interval = 4.0f;  // Période intermédiaire agréable
-        else if (elapsed < 120f) interval = 3.5f; // Légère montée d'adrénaline
-        else if (elapsed < 180f) interval = 3.0f; // Progression finale stabilisée et saine
-        else interval = 2.2f;                    // Reste dynamique sans jamais saturer l'arène de jeu
+        // Early game 
+        if (elapsed < 30f) return 4.0f;
 
-        // Si le boss est actif, on ralentit drastiquement l'apparition des autres ennemis (x3)
-        // pour laisser la vedette au combat de boss et éviter d'étouffer le joueur !
-        if (IsBossActive())
-        {
-            interval *= 3f;
-        }
+       
+        if (elapsed < 60f) return 3.5f;
 
-        return interval;
+       
+        if (elapsed < 120f) return 2.9f;
+
+        // Mid game
+        if (elapsed < 180f) return 2.0f;
+
+        // Late game
+        return 1.6f;
+    }
+
+    private int GetEnemyCount()
+    {
+        if (elapsed < 45f) return 1;
+        if (elapsed < 90f) return 2;
+        if (elapsed < 180f) return 3;
+
+        return 4;
     }
 
     private bool IsBossActive()
     {
-        // Recherche si le boss est en vie dans la scène
         return FindFirstObjectByType<EnemyBoss>() != null;
     }
 
@@ -89,27 +98,28 @@ public class EnemySpawner : MonoBehaviour
 
     private GameObject ChooseEnemyType()
     {
-        // Si le boss est actif, on ne fait apparaître QUE des Chasers (fantômes légers et rapides)
-        // pour que le joueur puisse se concentrer à 100% sur l'esquive des tirs du boss sans être bloqué par des sacs à PV !
-        if (IsBossActive())
-        {
-            return chaserPrefab;
-        }
-
-        if (elapsed < 20f)
+        if (elapsed < 30f)
             return chaserPrefab;
 
-        if (elapsed < 60f)
+        float roll = Random.value;
+
+        // Early game
+        if (elapsed < 90f)
         {
-            float roll = Random.value;
-            if (roll < 0.85f) return chaserPrefab; // 85% Chasers (ennemis légers)
-            return tankPrefab;                     // 15% Tanks (ennemis lourds rares)
+            if (roll < 0.80f) return chaserPrefab;
+            return tankPrefab;
         }
 
-        // Après 1 minute
-        float r = Random.value;
-        if (r < 0.80f) return chaserPrefab;       // 80% Chasers
-        return tankPrefab;                        // 20% Tanks (excellent ratio d'action !)
+        // Mid game
+        if (elapsed < 180f)
+        {
+            if (roll < 0.70f) return chaserPrefab;
+            return tankPrefab;
+        }
+
+        // Late game
+        if (roll < 0.60f) return chaserPrefab;
+        return tankPrefab;
     }
 
     private Vector2 GetPerimeterSpawnPoint()

@@ -10,12 +10,12 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float _playerSpeed = 6.0f; // Vitesse de base augmentée à 6.0 pour une meilleure réactivité
+    [SerializeField] private float _playerSpeed = 6.0f; 
     [SerializeField] private float _maxHeight = 10f;
     [SerializeField] private float _minHeight = -10f;
 
     [Header("Stats")]
-    [SerializeField] private float _PlayerXpCap = 6f; // XP nécessaire pour le prochain niveau
+    [SerializeField] private float _PlayerXpCap = 6f; 
     [SerializeField] private float _PlayerCurentXp = 0f;
     [SerializeField] private float _PlayerCurentLvl = 1f;
     [SerializeField] private float _playerLife = 20f;
@@ -32,10 +32,10 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _deathParticlesPrefab;
     [SerializeField] private AudioClip _levelUpSound;
 
-    private Vector2 _lastDirection = Vector2.right; // Sauvegarde la direction (gauche/droite) pour le tir
-    private bool _isShooting = false; // Indique si le joueur maintient le bouton de tir enfoncé
+    private Vector2 _lastDirection = Vector2.right; 
+    private bool _isShooting = false; 
 
-    // Événements pour informer les autres scripts (ex: montée de niveau, mort)
+    
     public event EventHandler<OnPlayerUpEventArgs> OnPlayerUp;
     public event EventHandler OnPlayerDeath;
 
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
     public float PlayerSpeed => _playerSpeed;
     public Transform FirePoint => _firePoint;
     public bool IsShooting => _isShooting;
-    public Animator PlayerAnimator => _animator; // Permet à l'arme de déclencher l'animation d'attaque
+    public Animator PlayerAnimator => _animator; 
 
     private InputSystem_Actions _inputSystem_Actions; // Nouveau système d'Input (requis par la borne)
     private PolygonCollider2D _collider;
@@ -167,17 +167,17 @@ public class Player : MonoBehaviour
         if (_PlayerCurentXp >= _PlayerXpCap)
         {
             _PlayerCurentLvl++;
-            _playerSpeed += 0.35f; // Augmente dynamiquement la vitesse du joueur pour suivre le rythme des ennemis !
-            _PlayerXpCap += 5f; // On rend le prochain niveau plus long à atteindre
+            _playerSpeed += 0.35f; 
+            _PlayerXpCap += 3f; 
             _PlayerCurentXp = 0f;
 
-            // Joue le son de niveau supérieur s'il est configuré
+            
             if (_levelUpSound != null)
             {
                 AudioSource.PlayClipAtPoint(_levelUpSound, Camera.main != null ? Camera.main.transform.position : transform.position);
             }
 
-            // Alerte tous les scripts abonnés (ex: l'arme) que le joueur vient de monter de niveau
+            
             OnPlayerUp?.Invoke(this, new OnPlayerUpEventArgs
             {
                 newLevel = _PlayerCurentLvl
