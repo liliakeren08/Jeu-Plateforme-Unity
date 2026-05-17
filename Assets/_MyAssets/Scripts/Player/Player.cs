@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _hitParticlesPrefab;
     [SerializeField] private AudioClip _deathSound;
     [SerializeField] private GameObject _deathParticlesPrefab;
+    [SerializeField] private AudioClip _levelUpSound;
 
     private Vector2 _lastDirection = Vector2.right; // Sauvegarde la direction (gauche/droite) pour le tir
     private bool _isShooting = false; // Indique si le joueur maintient le bouton de tir enfoncé
@@ -163,6 +164,12 @@ public class Player : MonoBehaviour
             _PlayerXpCap += 5f; // On rend le prochain niveau plus long à atteindre
             _PlayerCurentXp = 0f;
 
+            // Joue le son de niveau supérieur s'il est configuré
+            if (_levelUpSound != null)
+            {
+                AudioSource.PlayClipAtPoint(_levelUpSound, Camera.main != null ? Camera.main.transform.position : transform.position);
+            }
+
             // Alerte tous les scripts abonnés (ex: l'arme) que le joueur vient de monter de niveau
             OnPlayerUp?.Invoke(this, new OnPlayerUpEventArgs
             {
@@ -193,9 +200,16 @@ public class Player : MonoBehaviour
         {
             Instantiate(_hitParticlesPrefab, transform.position, Quaternion.identity);
         }
+
         if (_hitSound != null)
         {
-            AudioSource.PlayClipAtPoint(_hitSound, transform.position);
+            AudioSource.PlayClipAtPoint(_hitSound, Camera.main != null ? Camera.main.transform.position : transform.position);
+        }
+
+        // Atténue fortement la musique de fond pendant l'impact de dégât
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.DuckMusic(0.2f, 0.4f);
         }
 
         if (UIGame.Instance != null)
@@ -224,9 +238,10 @@ public class Player : MonoBehaviour
         {
             Instantiate(_deathParticlesPrefab, transform.position, Quaternion.identity);
         }
+
         if (_deathSound != null)
         {
-            AudioSource.PlayClipAtPoint(_deathSound, transform.position);
+            AudioSource.PlayClipAtPoint(_deathSound, Camera.main != null ? Camera.main.transform.position : transform.position);
         }
 
         // Empêche le joueur de tomber sous l'effet de la gravité quand les colliders sont désactivés

@@ -49,14 +49,30 @@ public class EnemySpawner : MonoBehaviour
 
     private float GetSpawnInterval()
     {
-        if (elapsed < 20f) return 5.0f;
-        if (elapsed < 45f) return 4.0f;
-        if (elapsed < 75f) return 3.5f;
-        if (elapsed < 120f) return 3.0f;
-        if (elapsed < 180f) return 2.5f;
-        if (elapsed < 210f) return 2.0f;
-        if (elapsed < 260f) return 1.5f;
-        return 1.0f;
+        float interval;
+        if (elapsed < 20f) interval = 6.0f;      // Début très calme pour s'équiper
+        else if (elapsed < 45f) interval = 5.0f;
+        else if (elapsed < 75f) interval = 4.0f;
+        else if (elapsed < 120f) interval = 3.5f;
+        else if (elapsed < 180f) interval = 3.0f;
+        else if (elapsed < 210f) interval = 2.5f;
+        else if (elapsed < 260f) interval = 2.0f;
+        else interval = 1.5f;                    // Fin de partie dynamique mais faisable
+
+        // Si le boss est actif, on ralentit drastiquement l'apparition des autres ennemis (x3)
+        // pour laisser la vedette au combat de boss et éviter d'étouffer le joueur !
+        if (IsBossActive())
+        {
+            interval *= 3f;
+        }
+
+        return interval;
+    }
+
+    private bool IsBossActive()
+    {
+        // Recherche si le boss est en vie dans la scène
+        return FindFirstObjectByType<EnemyBoss>() != null;
     }
 
     private void SpawnEnemy()
@@ -86,11 +102,11 @@ public class EnemySpawner : MonoBehaviour
             return tankPrefab;
         }
 
-        // Apr�s 1 minute � les 3 types
+        // Après 1 minute — uniquement les ennemis normaux (Chaser et Tank).
+        // Le Boss ne doit apparaître QUE via son timer dédié (firstBossTime) pour rester unique et mémorable !
         float r = Random.value;
-        if (r < 0.55f) return chaserPrefab;
-        if (r < 0.85f) return tankPrefab;
-        return bossPrefab;
+        if (r < 0.60f) return chaserPrefab;
+        return tankPrefab;
     }
 
     private Vector2 GetPerimeterSpawnPoint()

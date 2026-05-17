@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaserWeapon
   _fireballPrefab: {fileID: 2681285719720561147, guid: 87bf7e232a228634b9d419fe9904d74d, type: 3}
+  _shootSound: {fileID: 8300000, guid: 5f00da01d0dead000000000000000003, type: 3}
   _cooldown: 0.7
   _speed: 6
   _weaponLvl: 1

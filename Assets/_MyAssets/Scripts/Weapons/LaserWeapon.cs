@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 public class LaserWeapon : Weapons
 {
     [SerializeField] private GameObject _fireballPrefab;
+    [SerializeField] private AudioClip _shootSound;
     [SerializeField] private float _cooldown = 0.7f;
     [SerializeField] private float _speed = 6f;
     [SerializeField] private float _weaponLvl = 1f;
@@ -58,8 +59,20 @@ public class LaserWeapon : Weapons
     {
         if (player == null)
         {
-            Debug.LogWarning("Player non assign� ");
+            Debug.LogWarning("Player non assigneé ");
             return;
+        }
+
+        // Joue le son de tir s'il est assigné
+        if (_shootSound != null)
+        {
+            AudioSource.PlayClipAtPoint(_shootSound, Camera.main != null ? Camera.main.transform.position : transform.position);
+        }
+
+        // Atténue la musique pour faire ressortir le son du tir
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.DuckMusic(0.5f, 0.2f);
         }
 
         Vector2 baseDir = player.GetLastDirection().normalized;

@@ -7,6 +7,7 @@ using UnityEngine;
 public class FireballWeapon : Weapons
 {
     [SerializeField] private GameObject _fireballPrefab;
+    [SerializeField] private AudioClip _shootSound;
     
     // Temps de recharge (cooldown) entre chaque tir. Plus il est bas, plus le tir est rapide.
     [SerializeField] private float _cooldown = 0.1f; 
@@ -69,6 +70,18 @@ public class FireballWeapon : Weapons
         if (player.PlayerAnimator != null)
         {
             player.PlayerAnimator.SetTrigger("attack");
+        }
+
+        // Joue le son de tir s'il est assigné
+        if (_shootSound != null)
+        {
+            AudioSource.PlayClipAtPoint(_shootSound, Camera.main != null ? Camera.main.transform.position : transform.position);
+        }
+
+        // Atténue la musique pour faire ressortir le son du tir
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.DuckMusic(0.5f, 0.15f);
         }
 
         // Utilisation d'une Coroutine pour permettre un mini-délai si besoin pour l'animation

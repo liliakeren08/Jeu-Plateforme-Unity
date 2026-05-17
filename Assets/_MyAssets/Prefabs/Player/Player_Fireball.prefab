@@ -364,6 +364,7 @@ MonoBehaviour:
   _collider: {fileID: 7863348880570768647}
   _boostMultiplier: 10
   _duration: 2
+  _pickupSound: {fileID: 8300000, guid: a111a101d0dead000000000000000004, type: 3}
   _player: {fileID: 5140403154008166547}
 --- !u!1 &2084215906592870411
 GameObject:
@@ -464,6 +465,11 @@ MonoBehaviour:
   _weaponManager: {fileID: 6032054058411320303}
   _startingWeapon: {fileID: 6363206800486057494, guid: 76e75190c7f99954ab7c4bdeac799afb, type: 3}
   _firePoint: {fileID: 715993979640770674}
+  _hitSound: {fileID: 8300000, guid: a9062b10ca765fb43a290bf4a5df6bf2, type: 3}
+  _hitParticlesPrefab: {fileID: 0}
+  _deathSound: {fileID: 8300000, guid: b20f01deea74ef143bc83b0ab12f1cb1, type: 3}
+  _deathParticlesPrefab: {fileID: 0}
+  _levelUpSound: {fileID: 8300000, guid: b222b101d0dead000000000000000005, type: 3}
 --- !u!1 &7575231714968148459
 GameObject:
   m_ObjectHideFlags: 0

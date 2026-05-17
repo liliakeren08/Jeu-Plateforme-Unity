@@ -7,6 +7,7 @@ public class PlayerPickUp : MonoBehaviour
     [SerializeField] private CircleCollider2D _collider;
     [SerializeField] private float _boostMultiplier = 10f;
     [SerializeField] private float _duration = 2f;
+    [SerializeField] private AudioClip _pickupSound;
     private float _originalRadius;
     private Coroutine _currentRoutine;
 
@@ -27,9 +28,12 @@ public class PlayerPickUp : MonoBehaviour
                 _player.AddXP(orb.Value);
             }
 
-            Destroy(other.gameObject);
+            if (_pickupSound != null)
+            {
+                AudioSource.PlayClipAtPoint(_pickupSound, Camera.main != null ? Camera.main.transform.position : transform.position);
+            }
 
-            
+            Destroy(other.gameObject);
         }
 
         if (other.CompareTag("Power"))
@@ -38,6 +42,12 @@ public class PlayerPickUp : MonoBehaviour
                 StopCoroutine(_currentRoutine);
 
             _currentRoutine = StartCoroutine(GrowTemporarily());
+
+            if (_pickupSound != null)
+            {
+                AudioSource.PlayClipAtPoint(_pickupSound, Camera.main != null ? Camera.main.transform.position : transform.position);
+            }
+
             Destroy(other.gameObject);
         }
     }

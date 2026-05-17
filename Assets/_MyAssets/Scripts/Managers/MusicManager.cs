@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem; 
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour
 {
@@ -44,8 +45,65 @@ public class MusicManager : MonoBehaviour
         _audioSource.loop = true;
         _audioSource.Play();
 
-        // 3. Mise ‡ jour visuelle initiale
+        // 3. Mise √† jour visuelle initiale
         UpdateVisuals();
+    }
+
+    private Coroutine _duckCoroutine;
+
+    private void Update()
+    {
+        // S'assurer que la musique de fond joue en continu (sauf si on est en sourdine)
+        if (_audioSource != null && !_audioSource.isPlaying && !_isMuted)
+        {
+            _audioSource.Play();
+        }
+    }
+
+    /// <summary>
+    /// Att√©nue temporairement le volume de la musique de fond (effet Ducking)
+    /// pour mettre en valeur les effets sonores d'impact ou d'attaque.
+    /// </summary>
+    public void DuckMusic(float targetVolume = 0.3f, float duration = 0.4f)
+    {
+        if (_isMuted || _audioSource == null) return;
+
+        if (_duckCoroutine != null)
+        {
+            StopCoroutine(_duckCoroutine);
+        }
+
+        _duckCoroutine = StartCoroutine(DuckMusicCoroutine(targetVolume, duration));
+    }
+
+    private System.Collections.IEnumerator DuckMusicCoroutine(float targetVolume, float duration)
+    {
+        float originalVolume = 1.0f;
+        float elapsed = 0f;
+        float fadeTime = 0.05f; // Transition tr√®s rapide vers le bas
+
+        // Descendre le volume rapidement (duck)
+        while (elapsed < fadeTime)
+        {
+            elapsed += Time.deltaTime;
+            _audioSource.volume = Mathf.Lerp(originalVolume, targetVolume, elapsed / fadeTime);
+            yield return null;
+        }
+        _audioSource.volume = targetVolume;
+
+        // Attendre pendant la dur√©e de l'effet sonore
+        yield return new WaitForSeconds(duration);
+
+        // Remonter le volume progressivement
+        elapsed = 0f;
+        float restoreTime = 0.25f; // Transition fluide vers le haut
+        while (elapsed < restoreTime)
+        {
+            elapsed += Time.deltaTime;
+            _audioSource.volume = Mathf.Lerp(targetVolume, originalVolume, elapsed / restoreTime);
+            yield return null;
+        }
+        _audioSource.volume = originalVolume;
     }
 
     private void Mute_performed(InputAction.CallbackContext obj)
@@ -55,7 +113,7 @@ public class MusicManager : MonoBehaviour
 
     public void OnMuteClick()
     {
-        // On inverse l'Ètat
+        // On inverse l'√©tat
         _isMuted = !_isMuted;
 
         // On applique au moteur audio
@@ -69,14 +127,14 @@ public class MusicManager : MonoBehaviour
     {
         if (_muteImageDisplay != null)
         {
-            // On switch le sprite selon l'Ètat
+            // On switch le sprite selon l'√©tat
             _muteImageDisplay.sprite = _isMuted ? _soundOffSprite : _soundOnSprite;
         }
     }
 
     private void OnDestroy()
     {
-        // Nettoyage de l'Input System (trËs important)
+        // Nettoyage de l'Input System (tr√®s important)
         if (_inputSystem_Actions != null)
         {
             _inputSystem_Actions.Player.Mute.performed -= Mute_performed;
