@@ -1000,6 +1000,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Fireball
       objectReference: {fileID: 0}
+    - target: {fileID: 5140403154008166547, guid: f2977a14fbc96db4e9cb5933a77959f7, type: 3}
+      propertyPath: _hitParticlesPrefab
+      value: 
+      objectReference: {fileID: 6578584033241568632, guid: 902b913fb1802a34fb90a16da2069b5d, type: 3}
+    - target: {fileID: 5140403154008166547, guid: f2977a14fbc96db4e9cb5933a77959f7, type: 3}
+      propertyPath: _deathParticlesPrefab
+      value: 
+      objectReference: {fileID: 8378894986920157213, guid: 34a51145515879a4481a6eda99fea652, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
