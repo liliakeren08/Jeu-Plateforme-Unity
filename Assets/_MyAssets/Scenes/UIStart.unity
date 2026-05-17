@@ -154,9 +154,9 @@ RectTransform:
   m_Father: {fileID: 1938986926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -46.2253, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &30754689
 MonoBehaviour:
@@ -512,9 +512,9 @@ RectTransform:
   - {fileID: 972846471}
   m_Father: {fileID: 348244585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -440}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &288494867
@@ -968,9 +968,9 @@ RectTransform:
   - {fileID: 2045524652}
   m_Father: {fileID: 348244585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &448425293
@@ -1277,7 +1277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &512793978
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1648,9 +1648,9 @@ RectTransform:
   - {fileID: 2145800971}
   m_Father: {fileID: 348244585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &848341376
@@ -3055,7 +3055,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.00030518}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 11849.62}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1455586738
 MonoBehaviour:
@@ -3114,7 +3114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1534741735
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3426,10 +3426,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1455586737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 854.15186, y: -5924.81}
+  m_SizeDelta: {x: 1708.3037, y: 11849.62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1618912611
 MonoBehaviour:
@@ -3451,69 +3451,45 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Lorem ipsum (/\u02CCl\u0254\u02D0.r\u0259m \u02C8\u026Ap.s\u0259m/ LOR-\u0259m
-    IP-s\u0259m) is a dummy or placeholder text commonly used in graphic design,
-    publishing, and web development. It is typically a corrupted version of De finibus
-    bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher
-    Cicero, with words altered, added, and removed to make it nonsensical and improper
-    Latin. The first two words are the truncation of dolorem ipsum (\"pain itself\").
-    Lorem ipsum's purpose is to permit a page layout to be designed, independently
-    of the copy that will subsequently populate it, or to demonstrate various fonts
-    of a typeface without meaningful text that could be distracting.\r\n\r\nVersions
-    of the Lorem ipsum text have been used in typesetting since the 1960s, when advertisements
-    for Letraset transfer sheets popularized it.[1] Lorem ipsum was introduced to
-    the digital world in the mid-1980s, when Aldus employed it in graphic and word-processing
-    templates for its desktop publishing program PageMaker. Other popular word processors,
-    including Pages and Microsoft Word, have since adopted Lorem ipsum,[2] as have
-    many LaTeX packages,[3][4][5] web content managers such as Joomla! and WordPress,
-    and CSS libraries such as Semantic UI.\r\n\r\nExample text\r\nA common form of
-    Lorem ipsum reads:\r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing
-    elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-    ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nSource
-    text\r\nThe Lorem ipsum text is derived from sections 1.10.32 and 1.10.33 of
-    Cicero's De finibus bonorum et malorum.[6][7] The physical source may have been
-    the 1914 Loeb Classical Library edition of De finibus, where the Latin text,
-    presented on the left-hand (even) pages, breaks off on page 34 with \"Neque porro
-    quisquam est qui do-\" and continues on page 36 with \"lorem ipsum ...,\" suggesting
-    that the galley type of that page was mixed up to make the dummy text seen today.[1]\r\n\r\nThe
-    discovery of the text's origin is attributed to Richard McClintock, a Latin scholar
-    at Hampden\u2013Sydney College. McClintock connected Lorem ipsum to Cicero's
-    writing sometime before 1982 while searching for instances of the Latin word
-    consectetur, which was rarely used in classical literature.[2] McClintock first
-    published his discovery in a 1994 letter to a Before & After magazine editor,[8]
-    contesting the editor's earlier claim that Lorem ipsum had no meaning.[2]\r\n\r\nThe
-    sections of De finibus bonorum et malorum from which Lorem ipsum ultimately derives
-    is one in which Cicero promotes obtaining pleasure rationally instead of impulsively,
-    in his home city of Cumae between himself and Lucius Manlius Torquatus, a young
-    Epicurean, while another young Roman, Gaius Valerius Triarius, listens on. The
-    relevant sections as printed in the source is reproduced below with fragments
-    used in Lorem ipsum underlined. Letters in brackets were added to Lorem ipsum
-    and were not present in the source text:\r\n\r\n[32] Sed ut perspiciatis, unde
-    omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-    rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto
-    beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas
-    sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos,
-    qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem
-    ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non numquam
-    [do] eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat
-    voluptatem. Ut enim ad minima veniam, quis nostrum[d] exercitationem ullam corporis
-    suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? [D]Quis autem
-    vel eum i[r]ure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae
-    consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?\r\n\r\n[33]
-    At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium
-    voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi
-    sint, obcaecati cupiditate non provident, similique sunt in culpa, qui officia
-    deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem reru[d]um
-    facilis est e[r]t expedita distinctio. Nam libero tempore, cum soluta nobis est
-    eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat facere
-    possimus, omnis voluptas assumenda est, omnis dolor repellend[a]us. Temporibus
-    autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet,
-    ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum
-    hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias
-    consequatur aut perferendis doloribus asperiores repellat."
+  m_text: "<b><color=orange>FICHE D'INSTRUCTIONS DE LA BORNE D'ARCADE \u2014 VAUDOU
+    GLITCH</color></b>\r\n\r\nCette fiche sert de guide de r\xE9f\xE9rence pour les
+    joueurs et les testeurs sur la borne d'arcade de VAUDOU GLITCH (Projet Acad\xE9mique
+    Lab4_JalAmeBomDia). Elle pr\xE9sente les contr\xF4les physiques de la borne ainsi
+    que les raccourcis clavier \xE9quivalents pour le d\xE9veloppement.\r\n\r\n<b>SCH\xC9MA
+    DES CONTR\xD4LES PHYSIQUES DE LA BORNE</b>\r\n\r\n[ DEPLACEMENT ]                          
+    [ BOUTONS DE JEU ]\r\n            (Haut)\r\n      (G)  JOYSTICK  (D)             
+    [Bouton 1] : ATTAQUE (Tir continu - Rouge)\r\n            (Bas)                     
+    [Bouton 2] : COUPER SON (Mute - Jaune)\r\n                                     
+    [Bouton 3] : VALIDER / FERMER (Vert)\r\n  (Joystick Analogique)              
+    [Bouton 4] : RETOUR / QUITTER (Bleu)\r\n\r\n--------------------------------------------------\r\n\r\n<b>CONFIGURATION
+    D\xC9TAILL\xC9E DES BOUTONS</b>\r\n\r\n- <b>Joystick</b> : D\xE9placement (Move).
+    D\xE9place le h\xE9ros dans l'ar\xE8ne 2D (4/8 directions). Clignote le sprite
+    \xE0 gauche/droite. (Clavier: ZQSD / Fl\xE8ches)\r\n- <b>Bouton 1 (Rouge)</b>
+    : Attaque (Attack). Maintenir enfonc\xE9 pour d\xE9clencher le tir automatique
+    continu des armes (Boule de feu, Laser). (Clavier: Espace / Clic Gauche)\r\n-
+    <b>Bouton 2 (Jaune)</b> : Sourdine (Mute). Active ou d\xE9sactive la musique
+    d'ambiance en boucle \xE0 tout moment. (Clavier: Touche M)\r\n- <b>Bouton 3 (Vert)</b>
+    : Valider / Commencer. D\xE9marre la partie, ferme le panneau des instructions,
+    ou valide le nom au Highscore. (Clavier: Touche Entr\xE9e)\r\n- <b>Bouton 4 (Bleu)</b>
+    : Retour / Quitter. Revient au menu ou ferme le jeu pour relancer le launcher
+    Portail.exe de la borne. (Clavier: Touche \xC9chap)\r\n\r\n--------------------------------------------------\r\n\r\n<b>GUIDE
+    DE JEU RAPIDE</b>\r\n\r\n<b>1. D\xE9marrage</b>\r\n- Sur le menu principal, utilisez
+    le Joystick pour s\xE9lectionner D\xE9marrer.\r\n- Appuyez sur le Bouton Vert
+    (Valider) pour lancer la partie.\r\n- Besoin d'aide ? Appuyez sur Instructions
+    pour afficher le panneau d'aide, et fermez-le en appuyant sur le Bouton Vert.\r\n\r\n<b>2.
+    En Pleine Partie</b>\r\n- <b>Esquivez</b> : Utilisez le Joystick pour naviguer.
+    Restez toujours en mouvement pour \xE9viter le contact direct avec les monstres.\r\n-
+    <b>Tirez</b> : Orientez le personnage horizontalement vers la cible, et maintenez
+    le Bouton Rouge enfonc\xE9.\r\n- <b>Progressez</b> : Ramassez les orbes bleus
+    d'XP. Chaque niveau sup\xE9rieur am\xE9liore automatiquement vos projectiles
+    (augmentation du nombre de boules de feu tir\xE9es en \xE9ventail, vitesse, taille
+    g\xE9ante).\r\n- <b>Aimantez</b> : Cherchez l'Aimant de Puissance \xE0 l'\xE9cran.
+    Il booste votre rayon d'attraction par 10x pendant 2 secondes pour tout aspirer
+    d'un coup !\r\n\r\n<b>3. Fin de Partie & Highscore</b>\r\n- \xC0 votre mort,
+    si vous battez un record, saisissez votre nom pour immortaliser vos performances
+    sur le tableau des scores locaux.\r\n- Appuyez sur le Bouton Bleu pour revenir
+    \xE0 l'\xE9cran de titre.\r\n- Appuyez sur le Bouton de Sortie pour fermer le
+    jeu et retourner au Portail g\xE9n\xE9ral de la borne.\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4322,8 +4298,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 983106957}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.95055115}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4657,9 +4633,9 @@ RectTransform:
   - {fileID: 1626788922}
   m_Father: {fileID: 348244585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -310}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2045524651

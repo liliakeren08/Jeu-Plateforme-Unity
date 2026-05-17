@@ -25,6 +25,12 @@ public class Player : MonoBehaviour
     [SerializeField] private Weapons _startingWeapon;
     [SerializeField] private Transform _firePoint;
 
+    [Header("Configuration Audio & FX")]
+    [SerializeField] private AudioClip _hitSound;
+    [SerializeField] private GameObject _hitParticlesPrefab;
+    [SerializeField] private AudioClip _deathSound;
+    [SerializeField] private GameObject _deathParticlesPrefab;
+
     private Vector2 _lastDirection = Vector2.right; // Sauvegarde la direction (gauche/droite) pour le tir
     private bool _isShooting = false; // Indique si le joueur maintient le bouton de tir enfoncé
 
@@ -43,6 +49,8 @@ public class Player : MonoBehaviour
     private Camera _cam;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
+    private bool _isDead = false;
+    private float _maxLife;
 
     public class OnPlayerUpEventArgs : EventArgs
     {
@@ -65,10 +73,19 @@ public class Player : MonoBehaviour
 
         _collider = GetComponentInChildren<PolygonCollider2D>();
         _cam = Camera.main;
+
+        // Initialisation de la barre de vie
+        _maxLife = _playerLife;
+        if (UIGame.Instance != null)
+        {
+            UIGame.Instance.UpdateHealthBar(_playerLife, _maxLife);
+        }
     }
 
     private void Update()
     {
+        if (_isDead) return;
+
         PlayerMovement();
         PlayerShooting();
         PlayerLvlUp();
@@ -166,8 +183,25 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (_isDead) return;
+
         _playerLife -= damage;
         StartCoroutine(FlashRed()); // Fait clignoter le joueur en rouge
+
+        // Effets visuels et sonores de dégâts
+        if (_hitParticlesPrefab != null)
+        {
+            Instantiate(_hitParticlesPrefab, transform.position, Quaternion.identity);
+        }
+        if (_hitSound != null)
+        {
+            AudioSource.PlayClipAtPoint(_hitSound, transform.position);
+        }
+
+        if (UIGame.Instance != null)
+        {
+            UIGame.Instance.UpdateHealthBar(_playerLife, _maxLife);
+        }
 
         if (_playerLife <= 0)
             Die();
@@ -182,6 +216,34 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
+        if (_isDead) return;
+        _isDead = true;
+
+        // Effets visuels et sonores d'explosion de mort
+        if (_deathParticlesPrefab != null)
+        {
+            Instantiate(_deathParticlesPrefab, transform.position, Quaternion.identity);
+        }
+        if (_deathSound != null)
+        {
+            AudioSource.PlayClipAtPoint(_deathSound, transform.position);
+        }
+
+        // Empêche le joueur de tomber sous l'effet de la gravité quand les colliders sont désactivés
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+        }
+
+        // Désactive tous les colliders pour éviter que d'autres ennemis ne le touchent
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D col in colliders)
+        {
+            col.enabled = false;
+        }
+
         _animator.SetTrigger("isDead");
         OnPlayerDeath?.Invoke(this, EventArgs.Empty);
 
@@ -193,10 +255,25 @@ public class Player : MonoBehaviour
 
     private IEnumerator LoadSceneAfterAnimation()
     {
-        yield return null;
-        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        yield return new WaitForSeconds(stateInfo.length);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        // L'animation Titan_Death dure exactement 0.6 secondes.
+        // On attend 0.55 secondes pour masquer le visuel juste avant la toute dernière image
+        // afin de garantir qu'on ne revoit jamais la pose Idle/Walk du début !
+        yield return new WaitForSeconds(0.55f);
+
+        // Désactive complètement le visuel du joueur juste avant qu'il ne reboucle sur l'idle/walk
+        Transform playerVisual = transform.Find("PlayerVisual");
+        if (playerVisual != null)
+        {
+            playerVisual.gameObject.SetActive(false);
+        }
+        else if (_spriteRenderer != null)
+        {
+            _spriteRenderer.enabled = false;
+        }
+
+        // Une mini pause finale de 0.1 seconde pour finir proprement la transition, puis fin de jeu
+        yield return new WaitForSeconds(0.1f);
+        GameManager.Instance.EndGame();
     }
 
     private void OnDestroy()
