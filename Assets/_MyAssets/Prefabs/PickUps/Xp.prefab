@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 840293868670557976}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 1.08, z: 0}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
+  m_LocalPosition: {x: -0.04, y: 4.3, z: 0}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3048912845384974834}
@@ -49,7 +49,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -4847,7 +4847,7 @@ GameObject:
   - component: {fileID: 3048912845384974834}
   - component: {fileID: 151341356642229464}
   - component: {fileID: 3437942829990134108}
-  - component: {fileID: 4368003335741788723}
+  - component: {fileID: 6013623681832231844}
   m_Layer: 0
   m_Name: Xp
   m_TagString: Xp
@@ -4865,7 +4865,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.077, y: -2.358, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 656237199764023897}
@@ -4944,8 +4944,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::XPOrb
   _speed: 7
   _value: 1
---- !u!58 &4368003335741788723
-CircleCollider2D:
+--- !u!60 &6013623681832231844
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4978,5 +4978,73 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.043258667, y: 1.0865402}
-  m_Radius: 0.40661275
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 16, y: 8.75}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 1.875, y: 4.875}
+      - {x: 1.625, y: 5.5}
+      - {x: 1.1875, y: 6.0625}
+      - {x: -0.3125, y: 6.5625}
+      - {x: -1.3125, y: 6.5625}
+      - {x: -1.625, y: 6.5}
+      - {x: -2.0625, y: 5.6875}
+      - {x: -2, y: 5.5}
+      - {x: -1.8125, y: 5.4375}
+      - {x: -2.0625, y: 5.4375}
+      - {x: -2.125, y: 5.25}
+      - {x: -2.125, y: 4.9375}
+      - {x: -1.9375, y: 4.5625}
+      - {x: -1.875, y: 3.1875}
+      - {x: -0.6875, y: 2.5}
+      - {x: 0.75, y: 2.5}
+      - {x: 1.125, y: 2.8125}
+      - {x: 1.8125, y: 3.4375}
+      - {x: 1.875, y: 4}
+    - - {x: 1.6875, y: 5.625}
+      - {x: 1.6875, y: 5.5625}
+      - {x: 1.875, y: 5.3125}
+      - {x: 2.0625, y: 5.375}
+      - {x: 2.0625, y: 5.6875}
+      - {x: 1.9375, y: 5.8125}
+      - {x: 1.875, y: 5.8125}
+    - - {x: 1.3125, y: 6.375}
+      - {x: 1.0625, y: 6.125}
+      - {x: 1.0625, y: 6.0625}
+      - {x: 1.3125, y: 5.8125}
+      - {x: 1.375, y: 5.8125}
+      - {x: 1.625, y: 6.0625}
+      - {x: 1.625, y: 6.125}
+      - {x: 1.375, y: 6.375}
+    - - {x: 0.4375, y: 6.5}
+      - {x: 0.625, y: 6.25}
+      - {x: 0.8125, y: 6.3125}
+      - {x: 0.875, y: 6.5625}
+      - {x: 0.8125, y: 6.75}
+      - {x: 0.625, y: 6.75}
+      - {x: 0.4375, y: 6.6875}
+    - - {x: -1.25, y: 6.9375}
+      - {x: -1.4375, y: 6.75}
+      - {x: -1.4375, y: 6.6875}
+      - {x: -1.25, y: 6.5}
+      - {x: -1.1875, y: 6.5}
+      - {x: -1, y: 6.6875}
+      - {x: -1, y: 6.75}
+      - {x: -1.1875, y: 6.9375}
+    - - {x: -0.3125, y: 7.25}
+      - {x: -0.5, y: 7.0625}
+      - {x: -0.5, y: 6.875}
+      - {x: -0.375, y: 6.75}
+      - {x: -0.1875, y: 6.75}
+      - {x: 0, y: 6.9375}
+      - {x: 0, y: 7.0625}
+      - {x: -0.1875, y: 7.25}
+  m_UseDelaunayMesh: 1
