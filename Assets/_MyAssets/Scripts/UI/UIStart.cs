@@ -27,6 +27,21 @@ public class UIStart : UI
         int compteur = PlayerPrefs.GetInt("GamesCount", 0);
         _txtCompteur.text = "Nombre de parties : " + compteur.ToString();
 
+        // SÉCURITÉ : Recherche automatique du bouton démarrer s'il a perdu sa référence dans l'inspecteur
+        if (_startButton == null)
+        {
+            Button[] allButtons = FindObjectsByType<Button>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (var btn in allButtons)
+            {
+                string nameLower = btn.name.ToLower();
+                if (nameLower.Contains("demarrer") || nameLower.Contains("start") || nameLower.Contains("démarrer"))
+                {
+                    _startButton = btn;
+                    break;
+                }
+            }
+        }
+
         // Slectionne le bouton dmarrer au chargement de la scne
         if (_startButton != null)
         {
@@ -88,11 +103,11 @@ public class UIStart : UI
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        try 
+        try
         {
             System.Diagnostics.Process.Start("..\\Portail.exe");
-        } 
-        catch (System.Exception e) 
+        }
+        catch (System.Exception e)
         {
             Debug.Log("Portail non trouvé: " + e.Message);
         }

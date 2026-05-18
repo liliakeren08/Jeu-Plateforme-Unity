@@ -62,9 +62,13 @@ public class HighScoreTable : MonoBehaviour
         string jsonString = PlayerPrefs.GetString("highScoreTable"); // RÃ©cupÃ¨re la chaÃ®ne JSON stockÃ©e dans les PlayerPrefs sous la clÃ© "highScoreTable"
         highScores = JsonUtility.FromJson<HighScores>(jsonString); // DÃ©sÃ©rialise la chaÃ®ne JSON en une instance de la classe HighScores
 
-        if (highScores == null) 
+        // SÉCURITÉ : Si la table ou sa liste d'entrées est nulle (suite à une réinitialisation), on l'initialise proprement
+        if (highScores == null || highScores.highScoreEntryList == null) 
         {
             AddHighScoreEntry(100, "CTR");
+            // Re-charger la table après l'initialisation de sécurité
+            jsonString = PlayerPrefs.GetString("highScoreTable");
+            highScores = JsonUtility.FromJson<HighScores>(jsonString);
         }
 
         // Parcourt la liste des highscores pour trier les entrÃ©es par ordre dÃ©croissant de score

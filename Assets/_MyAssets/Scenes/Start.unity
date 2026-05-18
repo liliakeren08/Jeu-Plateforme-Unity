@@ -245,8 +245,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 809, y: -337}
-  m_SizeDelta: {x: 90, y: 90}
+  m_AnchoredPosition: {x: 818.8187, y: -341.6063}
+  m_SizeDelta: {x: 109.6375, y: 99.2126}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &105113381
 MonoBehaviour:
@@ -261,14 +261,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.028933525, g: 0, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4aa3f74a8a4184c4ea2b98f392525fd9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c246c47142d726343b9867489b0d6371, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2447,143 +2447,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165300573}
   m_CullTransparentMesh: 1
---- !u!1 &1242218746
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1242218747}
-  - component: {fileID: 1242218749}
-  - component: {fileID: 1242218748}
-  m_Layer: 5
-  m_Name: TextMute
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1242218747
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1242218746}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1426051351}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -613, y: -368}
-  m_SizeDelta: {x: 556.72, y: -22.415}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1242218748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1242218746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: 'MUSIC ON/OFF: M OU 6'
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8162e7e19ad05494da3ca58b0a0a3859, type: 2}
-  m_sharedMaterial: {fileID: 4719980395906606144, guid: 8162e7e19ad05494da3ca58b0a0a3859, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294485503
-  m_fontColor: {r: 1, g: 0.64716977, b: 0.9725068, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_characterHorizontalScale: 1
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1242218749
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1242218746}
-  m_CullTransparentMesh: 1
 --- !u!1 &1311075847
 GameObject:
   m_ObjectHideFlags: 0
@@ -2888,7 +2751,6 @@ RectTransform:
   - {fileID: 512793978}
   - {fileID: 1847358017}
   - {fileID: 883552738}
-  - {fileID: 1242218747}
   m_Father: {fileID: 886615463}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3145,8 +3007,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MusicManager
   _clipMusic: {fileID: 8300000, guid: 2449c436816f9e34892e8178a3aeb844, type: 3}
   _muteImageDisplay: {fileID: 105113381}
-  _soundOnSprite: {fileID: 21300000, guid: 4aa3f74a8a4184c4ea2b98f392525fd9, type: 3}
-  _soundOffSprite: {fileID: 21300000, guid: 40f46cccc4b7a2b4a83b21c5d5197690, type: 3}
+  _soundOnSprite: {fileID: 21300000, guid: c246c47142d726343b9867489b0d6371, type: 3}
+  _soundOffSprite: {fileID: 21300000, guid: 9e358ab3cd84ff64f92caeebe22c97a2, type: 3}
 --- !u!82 &1548030004
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3391,45 +3253,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<b><color=orange>FICHE D'INSTRUCTIONS DE LA BORNE D'ARCADE \u2014 VAUDOU
-    GLITCH</color></b>\r\n\r\nCette fiche sert de guide de r\xE9f\xE9rence pour les
-    joueurs et les testeurs sur la borne d'arcade de VAUDOU GLITCH (Projet Acad\xE9mique
-    Lab4_JalAmeBomDia). Elle pr\xE9sente les contr\xF4les physiques de la borne ainsi
-    que les raccourcis clavier \xE9quivalents pour le d\xE9veloppement.\r\n\r\n<b>SCH\xC9MA
-    DES CONTR\xD4LES PHYSIQUES DE LA BORNE</b>\r\n\r\n[ DEPLACEMENT ]                          
-    [ BOUTONS DE JEU ]\r\n            (Haut)\r\n      (G)  JOYSTICK  (D)             
-    [Bouton 1] : ATTAQUE (Tir continu - Rouge)\r\n            (Bas)                     
-    [Bouton 2] : COUPER SON (Mute - Jaune)\r\n                                     
-    [Bouton 3] : VALIDER / FERMER (Vert)\r\n  (Joystick Analogique)              
-    [Bouton 4] : RETOUR / QUITTER (Bleu)\r\n\r\n--------------------------------------------------\r\n\r\n<b>CONFIGURATION
-    D\xC9TAILL\xC9E DES BOUTONS</b>\r\n\r\n- <b>Joystick</b> : D\xE9placement (Move).
-    D\xE9place le h\xE9ros dans l'ar\xE8ne 2D (4/8 directions). Clignote le sprite
-    \xE0 gauche/droite. (Clavier: ZQSD / Fl\xE8ches)\r\n- <b>Bouton 1 (Rouge)</b>
-    : Attaque (Attack). Maintenir enfonc\xE9 pour d\xE9clencher le tir automatique
-    continu des armes (Boule de feu, Laser). (Clavier: Espace / Clic Gauche)\r\n-
-    <b>Bouton 2 (Jaune)</b> : Sourdine (Mute). Active ou d\xE9sactive la musique
-    d'ambiance en boucle \xE0 tout moment. (Clavier: Touche M)\r\n- <b>Bouton 3 (Vert)</b>
-    : Valider / Commencer. D\xE9marre la partie, ferme le panneau des instructions,
-    ou valide le nom au Highscore. (Clavier: Touche Entr\xE9e)\r\n- <b>Bouton 4 (Bleu)</b>
-    : Retour / Quitter. Revient au menu ou ferme le jeu pour relancer le launcher
-    Portail.exe de la borne. (Clavier: Touche \xC9chap)\r\n\r\n--------------------------------------------------\r\n\r\n<b>GUIDE
-    DE JEU RAPIDE</b>\r\n\r\n<b>1. D\xE9marrage</b>\r\n- Sur le menu principal, utilisez
-    le Joystick pour s\xE9lectionner D\xE9marrer.\r\n- Appuyez sur le Bouton Vert
-    (Valider) pour lancer la partie.\r\n- Besoin d'aide ? Appuyez sur Instructions
-    pour afficher le panneau d'aide, et fermez-le en appuyant sur le Bouton Vert.\r\n\r\n<b>2.
-    En Pleine Partie</b>\r\n- <b>Esquivez</b> : Utilisez le Joystick pour naviguer.
-    Restez toujours en mouvement pour \xE9viter le contact direct avec les monstres.\r\n-
-    <b>Tirez</b> : Orientez le personnage horizontalement vers la cible, et maintenez
-    le Bouton Rouge enfonc\xE9.\r\n- <b>Progressez</b> : Ramassez les orbes bleus
-    d'XP. Chaque niveau sup\xE9rieur am\xE9liore automatiquement vos projectiles
-    (augmentation du nombre de boules de feu tir\xE9es en \xE9ventail, vitesse, taille
-    g\xE9ante).\r\n- <b>Aimantez</b> : Cherchez l'Aimant de Puissance \xE0 l'\xE9cran.
-    Il booste votre rayon d'attraction par 10x pendant 2 secondes pour tout aspirer
-    d'un coup !\r\n\r\n<b>3. Fin de Partie & Highscore</b>\r\n- \xC0 votre mort,
-    si vous battez un record, saisissez votre nom pour immortaliser vos performances
-    sur le tableau des scores locaux.\r\n- Appuyez sur le Bouton Bleu pour revenir
-    \xE0 l'\xE9cran de titre.\r\n- Appuyez sur le Bouton de Sortie pour fermer le
-    jeu et retourner au Portail g\xE9n\xE9ral de la borne.\r\n"
+  m_text: "=======================================\r\n         CONTROLES DE LA BORNE\r\n=======================================\r\n\r\nDEPLACEMENT
+    : \r\nUtilise le Joystick (ou les Fl\xE8ches du clavier)\r\n\r\nATTAQUER : \r\nAppuie
+    sur le BOUTON 1 de la borne (ou ESPACE sur PC)\r\n\r\nMUSIQUE ON/OFF : \r\nAppuie
+    sur le bouton SOURDINE de la borne (ou M ou 6 sur PC)\r\n\r\n\r\n=======================================\r\n              
+    CREDITS\r\n=======================================\r\n\r\nJeu cree par :\r\n-
+    Koami Esdras Amedjiko\r\n- Lilia Emmanuelle Bombo\r\n- Rokhaya Diagne\r\n- Wylliam
+    Jalbert-Letourneau"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
