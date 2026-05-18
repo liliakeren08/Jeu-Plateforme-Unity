@@ -1220,7 +1220,7 @@ MonoBehaviour:
   chaserPrefab: {fileID: 5666490486633273622, guid: ded7b541ec191844084c51d8e4356731, type: 3}
   tankPrefab: {fileID: 5353232651572121680, guid: 11a6be38936b36e40bf4f2df463e4324, type: 3}
   bossPrefab: {fileID: 9003545115738624286, guid: 2aa2c0eb3737f0344a9ff4658fcfed85, type: 3}
-  firstBossTime: 90
+  firstBossTime: 30
   bossInterval: 120
 --- !u!1 &1233218431
 GameObject:

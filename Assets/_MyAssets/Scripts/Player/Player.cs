@@ -298,6 +298,31 @@ public class Player : MonoBehaviour
         GameManager.Instance.EndGame();
     }
 
+    // AJOUT : Système de Power Boost de 10s après avoir vaincu le Boss !
+    private bool _isBossPowerBoostActive = false;
+    public bool IsBossPowerBoostActive => _isBossPowerBoostActive;
+
+    public void ActivateBossPowerBoost(float duration = 10f)
+    {
+        StartCoroutine(BossPowerBoostRoutine(duration));
+    }
+
+    private IEnumerator BossPowerBoostRoutine(float duration)
+    {
+        _isBossPowerBoostActive = true;
+        
+        // Effet visuel néon cyan/glitch pour indiquer le God Mode !
+        if (_spriteRenderer != null)
+            _spriteRenderer.color = new Color(0f, 2.5f, 2.5f, 1f); 
+
+        yield return new WaitForSeconds(duration);
+
+        _isBossPowerBoostActive = false;
+        
+        if (_spriteRenderer != null)
+            _spriteRenderer.color = Color.white;
+    }
+
     private void OnDestroy()
     {
         // Toujours désactiver le système d'inputs quand l'objet est supprimé

@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject bossPrefab;
 
     [Header("Boss Settings")]
-    public float firstBossTime = 90f;
+    public float firstBossTime = 30f; // MODIFIÉ : Réduit à 30s (au lieu de 90s) pour que le prof puisse voir le Boss rapidement !
     public float bossInterval = 120f;
 
     private Camera cam;
@@ -31,6 +31,13 @@ public class EnemySpawner : MonoBehaviour
         {
             elapsed = Time.timeSinceLevelLoad;
 
+            // SÉCURITÉ / ÉQUILIBRAGE : Si le boss est actif, on met en pause l'apparition des petits ennemis !
+            if (IsBossActive())
+            {
+                yield return new WaitForSeconds(1.5f); // Attend 1.5s avant de revérifier
+                continue;
+            }
+
             int enemyCount = GetEnemyCount();
             float interval = GetSpawnInterval();
 
@@ -42,7 +49,6 @@ public class EnemySpawner : MonoBehaviour
             if (elapsed >= nextBossTime)
             {
                 SpawnBoss();
-                nextBossTime += bossInterval;
             }
 
             yield return new WaitForSeconds(interval);
@@ -94,6 +100,24 @@ public class EnemySpawner : MonoBehaviour
         Vector2 pos = GetPerimeterSpawnPoint();
 
         Instantiate(bossPrefab, pos, Quaternion.identity);
+
+        // Repousser la prochaine apparition de Boss pour laisser respirer le joueur
+        nextBossTime = Time.timeSinceLevelLoad + bossInterval;
+
+        // NETTOYAGE : Détruire tous les petits ennemis présents à l'arrivée du Boss pour un vrai duel épique !
+        EnemyChaser[] chasers = FindObjectsByType<EnemyChaser>(FindObjectsSortMode.None);
+        foreach (var chaser in chasers)
+        {
+            Destroy(chaser.gameObject);
+        }
+
+        EnemyTank[] tanks = FindObjectsByType<EnemyTank>(FindObjectsSortMode.None);
+        foreach (var tank in tanks)
+        {
+            Destroy(tank.gameObject);
+        }
+
+        Debug.Log("[EnemySpawner] Arène nettoyée de ses petits ennemis pour le duel contre le Boss !");
     }
 
     private GameObject ChooseEnemyType()

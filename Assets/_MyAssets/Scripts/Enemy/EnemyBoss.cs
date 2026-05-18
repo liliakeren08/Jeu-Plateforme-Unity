@@ -183,6 +183,17 @@ public class EnemyBoss : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.EnemyDestroyed(_enemyPoints, "Bullet");
 
+        // AJOUT : Activer le God Mode Power Boost de 10s sur le joueur !
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            Player pScript = playerObj.GetComponent<Player>();
+            if (pScript != null)
+            {
+                pScript.ActivateBossPowerBoost(10f);
+            }
+        }
+
         StartCoroutine(DestroyAfterAnimation());
     }
 

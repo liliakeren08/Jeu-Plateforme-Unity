@@ -54,8 +54,15 @@ public class FireballWeapon : Weapons
         // Le timer augmente en permanence (l'arme se recharge tout le temps en arriÃ¨re-plan)
         _timer += Time.deltaTime;
 
+        // Si le boost de boss est actif, on diminue drastiquement le cooldown pour tirer 2.5 fois plus vite !
+        float currentCooldown = _cooldown;
+        if (player != null && player.IsBossPowerBoostActive)
+        {
+            currentCooldown = Mathf.Max(0.04f, _cooldown * 0.4f);
+        }
+
         // Si le bouton de tir est enfoncÃ© ET que l'arme est rechargÃ©e (timer >= cooldown)
-        if (player != null && player.IsShooting && _timer >= _cooldown)
+        if (player != null && player.IsShooting && _timer >= currentCooldown)
         {
             Attack();
             _timer = 0f; // On rÃ©initialise le timer aprÃ¨s chaque tir
@@ -102,15 +109,25 @@ public class FireballWeapon : Weapons
         // On dÃ©finit la position d'apparition de la boule de feu
         Vector3 spawnPos = firePoint != null ? firePoint.position : player.transform.position;
 
+        int finalProjectileCount = _projectileCount;
+        float finalSizeMultiplier = _sizeMultiplier;
+
+        // Si le boost de Boss est actif, on passe en mode tirs géants triples spread !
+        if (player.IsBossPowerBoostActive)
+        {
+            finalProjectileCount = Mathf.Max(3, _projectileCount + 2); // Au moins 3 projectiles !
+            finalSizeMultiplier = _sizeMultiplier * 2.2f;              // Projectiles géants 2.2x plus gros !
+        }
+
         // Boucle pour gÃ©nÃ©rer le bon nombre de boules de feu (qui augmente avec les niveaux)
-        for (int i = 0; i < _projectileCount; i++)
+        for (int i = 0; i < finalProjectileCount; i++)
         {
             float angleOffset = 0f;
             
             // S'il y a plusieurs projectiles, on calcule un angle pour les envoyer en "Ã©ventail" (spread)
-            if (_projectileCount > 1)
+            if (finalProjectileCount > 1)
             {
-                float totalSpread = _spreadAngle * (_projectileCount - 1);
+                float totalSpread = _spreadAngle * (finalProjectileCount - 1);
                 angleOffset = -totalSpread / 2f + (_spreadAngle * i);
             }
 
@@ -120,7 +137,7 @@ public class FireballWeapon : Weapons
             GameObject fbObj = Instantiate(_fireballPrefab, spawnPos, Quaternion.identity);
             Fireball fb = fbObj.GetComponent<Fireball>();
             if (fb != null)
-                fb.Init(_speed, newDir, _sizeMultiplier);
+                fb.Init(_speed, newDir, finalSizeMultiplier);
         }
     }
 
