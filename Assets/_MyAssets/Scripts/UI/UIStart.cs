@@ -98,20 +98,18 @@ public class UIStart : UI
         SceneManager.LoadScene(noScene + 1);
     }
 
-    public void OnQuitClick()
+   
+    private IEnumerator QuitterBorne()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
         try
         {
-            System.Diagnostics.Process.Start("..\\Portail.exe");
+            System.Diagnostics.Process.Start(System.IO.Path.Combine(Application.dataPath, "../../Portail/Portail.exe"));
         }
         catch (System.Exception e)
         {
-            Debug.Log("Portail non trouvé: " + e.Message);
+            Debug.LogError("Impossible de lancer le portail : " + e.Message);
         }
+        yield return new WaitForSeconds(0.5f);
         Application.Quit();
-#endif
     }
 }
