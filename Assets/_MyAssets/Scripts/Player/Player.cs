@@ -92,42 +92,33 @@ public class Player : MonoBehaviour
         PlayerLvlUp();
     }
 
-    /// <summary>
-    /// Gère le déplacement du joueur avec le joystick ou le clavier.
-    /// </summary>
     private void PlayerMovement()
     {
-        // Lit les valeurs de déplacement envoyées par Unity (ex: WASD ou le Joystick de la borne)
+        
         Vector2 input = _inputSystem_Actions.Player.Move.ReadValue<Vector2>();
 
-        // Active l'animation de marche si le joueur bouge
+        
         _animator.SetBool("isWalking", input != Vector2.zero);
 
-        // Oriente le visuel du personnage à gauche ou à droite selon le mouvement
+       
         if (input.x > 0)
             _spriteRenderer.flipX = false;
         else if (input.x < 0)
             _spriteRenderer.flipX = true;
 
-        // On sauvegarde UNIQUEMENT la direction horizontale (X) pour que les boules de feu 
-        // partent toujours tout droit (gauche ou droite), même si on marche en diagonale.
         if (input.x != 0)
             _lastDirection = new Vector2(input.x, 0).normalized;
 
-        // Applique le mouvement sur le Transform du personnage
+        
         Vector3 movement = new Vector3(input.x, input.y, 0f);
         transform.position += movement * _playerSpeed * Time.deltaTime;
 
         ClampMovement();
     }
 
-    /// <summary>
-    /// Détecte l'appui sur le bouton de tir. 
-    /// L'arme elle-même gérera la cadence (cooldown).
-    /// </summary>
     private void PlayerShooting()
     {
-        // IsPressed() est VRAI tant que le bouton est enfoncé (permet le tir automatique/continu)
+        
         _isShooting = _inputSystem_Actions.Player.Attack.IsPressed();
     }
 
