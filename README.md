@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="#-téléchargement--jouer"><strong>📥 Télécharger la version jouable</strong></a> •
+  <a href="#-état-du-projet--version-jouable"><strong>🎮 Version Jouable</strong></a> •
   <a href="#-fonctionnalités-clés"><strong>✨ Fonctionnalités</strong></a> •
   <a href="#-architecture--stack-technique"><strong>🛠️ Stack Technique</strong></a> •
   <a href="#-contrôles"><strong>🕹️ Contrôles</strong></a>
@@ -24,12 +24,11 @@
 
 ---
 
-## 🚀 Téléchargement & Jouer
+## 🚀 État du projet & Version jouable
 
-Pour tester directement le jeu sans passer par Unity :
-1. Rendez-vous dans la section [**Releases**](../../releases) à droite du dépôt GitHub.
-2. Téléchargez l'archive `.zip` de la dernière version (ex: `VaudouGlitch-Windows-v1.0.zip`).
-3. Extrayez l'archive et lancez directement `VaudouGlitch.exe`.
+> ⏳ **Version binaire téléchargeable :** En cours de finalisation. L'exécutable Windows sera prochainement disponible au téléchargement direct.
+> 
+> 💡 *Pour tester le jeu immédiatement, vous pouvez le lancer directement dans l'éditeur Unity (voir la section [Installation & Compilation](#-installation--compilation-pour-les-développeurs)).*
 
 ---
 
